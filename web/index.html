@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="/assets/css/application.css" />
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="at-risk-navigator" ng-controller="AtRiskNavigatorController as navVm">
+      <div class="row">
+        <div class="col-xs-12">
+          <at-risk-products-over-time
+            handle-products-selection="navVm.updateSelectedProducts(selectedProducts)"
+          ></at-risk-products-over-time>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <product-projection-list at-risk-products="navVm.atRiskProducts"></product-projection-list>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script  src="/assets/js/deps.js"></script>
+
+  <script  src="/assets/js/app2.js"></script>
+  <script  src="/assets/js/app.js"></script>
+  <script  src="/assets/js/templates.js"></script>
+</body>
+</html>
