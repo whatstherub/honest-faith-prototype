@@ -49,7 +49,10 @@ System.register("config", [], function (_export) {
           "common.components.inventory.at_risk_navigator.directive": "js/common/components/inventory/at_risk_navigator.directive",
 
           "common.components.inventory.product_projection_chart.controller": "js/common/components/inventory/product_projection_chart.controller",
-          "common.components.inventory.product_projection_chart.directive": "js/common/components/inventory/product_projection_chart.directive"
+          "common.components.inventory.product_projection_chart.directive": "js/common/components/inventory/product_projection_chart.directive",
+
+          "common.components.inventory.inventory_projection_tweaks.controller": "js/common/components/inventory/inventory_projection_tweaks.controller",
+          "common.components.inventory.inventory_projection_tweaks.directive": "js/common/components/inventory/inventory_projection_tweaks.directive"
 
         }
       });
@@ -162,35 +165,31 @@ System.register('js/app/hello/hello.module', ['app.hello.controller', 'app.hello
     }
   };
 });
-System.register("js/common/components/inventory/at_risk_navigator.controller", [], function (_export) {
-  "use strict";
+System.register('js/common/components/inventory/at_risk_navigator.controller', [], function (_export) {
+  'use strict';
 
   var AtRiskNavigatorController;
 
-  var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+  var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
   return {
     setters: [],
     execute: function () {
       AtRiskNavigatorController = (function () {
-        function AtRiskNavigatorController($scope) {
+        function AtRiskNavigatorController($scope, $aside) {
           _classCallCheck(this, AtRiskNavigatorController);
 
-          this.atRiskProducts = $scope.atRiskProducts = [];
-          console.warn('nav scope', $scope);
+          this.$scope = $scope;
+          this.$aside = $aside;
+
+          this.tweaksDisplayed = false;
+          this.atRiskProducts = [];
         }
 
         _createClass(AtRiskNavigatorController, [{
-          key: "addNewProduct",
-          value: function addNewProduct() {
-            console.warn("nav vm adding new");
-
-            this.atRiskProducts.push({ name: "another" });
-          }
-        }, {
-          key: "updateSelectedProducts",
+          key: 'updateSelectedProducts',
           value: function updateSelectedProducts(products) {
             var _this = this;
 
@@ -203,14 +202,31 @@ System.register("js/common/components/inventory/at_risk_navigator.controller", [
             });
           }
         }, {
-          key: "saySomething",
-          value: function saySomething() {}
+          key: 'collapseTweaks',
+          value: function collapseTweaks() {}
+        }, {
+          key: 'expandTweaks',
+          value: function expandTweaks() {
+            var tweaks = this.$aside({
+              title: 'Tweaks',
+              templateUrl: 'js/common/components/inventory/inventory_projection_tweaks.template.html'
+            });
+
+            tweaks.$promise.then(function () {
+              tweaks.show();
+            });
+          }
+        }, {
+          key: 'toggleTweaks',
+          value: function toggleTweaks() {
+            return this.tweaksDisplayed ? this.collapseTweaks() : this.expandTweaks();
+          }
         }]);
 
         return AtRiskNavigatorController;
       })();
 
-      _export("default", AtRiskNavigatorController);
+      _export('default', AtRiskNavigatorController);
     }
   };
 });
@@ -239,13 +255,7 @@ System.register('js/common/components/inventory/at_risk_navigator.directive', []
 
         _createClass(AtRiskNavigatorDirective, [{
           key: 'link',
-          value: function link(scope, element, attrs, controllers, transclude) {
-            scope.atRiskProducts = [{ name: 'test' }];
-
-            transclude(scope.$parent, function (clone, scope) {
-              element.append(clone);
-            });
-          }
+          value: function link(scope, element, attrs, controllers, transclude) {}
         }], [{
           key: 'builder',
           value: function builder() {
@@ -281,7 +291,7 @@ System.register('js/common/components/inventory/at_risk_products_over_time.contr
           this.$log = $log;
           this.$scope = $scope;
 
-          $scope.chartConfig = this.chartConfig = this.produceChartConfig();
+          this.chartConfig = this.produceChartConfig();
 
           var atRiskProductsLoaded = AtRiskService.getAtRiskProducts();
 
@@ -404,12 +414,6 @@ System.register('js/common/components/inventory/at_risk_products_over_time.contr
               xAxis: [{
                 type: 'datetime',
                 reversed: false
-              }, {
-                type: 'datetime',
-                opposite: true,
-                reversed: false,
-                linkedTo: 0
-
               }],
               yAxis: {
                 title: {
@@ -475,10 +479,10 @@ System.register('js/common/components/inventory/at_risk_products_over_time.direc
     }
   };
 });
-System.register('js/common/components/inventory/inventory.module', ['common.components.inventory.at_risk_products_over_time.directive', 'common.components.inventory.at_risk_products_over_time.controller', 'common.services.inventory.atrisk.service', 'common.services.inventory.inventory_projection.service', 'common.services.inventory.products.service', 'common.services.inventory.supply_and_demand_history.service', 'common.services.inventory.inventory_details.service', 'common.components.inventory.product_projection.controller', 'common.components.inventory.product_projection.directive', 'common.components.inventory.at_risk_navigator.controller', 'common.components.inventory.at_risk_navigator.directive', 'common.components.inventory.product_projection_list.directive', 'common.components.inventory.product_projection_list.controller', 'common.components.inventory.product_projection_chart.directive', 'common.components.inventory.product_projection_chart.controller'], function (_export) {
+System.register('js/common/components/inventory/inventory.module', ['common.components.inventory.at_risk_products_over_time.directive', 'common.components.inventory.at_risk_products_over_time.controller', 'common.services.inventory.atrisk.service', 'common.services.inventory.inventory_projection.service', 'common.services.inventory.products.service', 'common.services.inventory.supply_and_demand_history.service', 'common.services.inventory.inventory_details.service', 'common.components.inventory.product_projection.controller', 'common.components.inventory.product_projection.directive', 'common.components.inventory.at_risk_navigator.controller', 'common.components.inventory.at_risk_navigator.directive', 'common.components.inventory.product_projection_list.directive', 'common.components.inventory.product_projection_list.controller', 'common.components.inventory.product_projection_chart.directive', 'common.components.inventory.product_projection_chart.controller', 'common.components.inventory.inventory_projection_tweaks.directive', 'common.components.inventory.inventory_projection_tweaks.controller'], function (_export) {
   'use strict';
 
-  var AtRiskProductsOverTimeDirective, AtRiskProductsOverTimeController, AtRiskService, InventoryProjectionService, ProductsService, SupplyAndDemandHistoryService, InventoryDetailsService, ProductProjectionController, ProductProjectionDirective, AtRiskNavigatorController, AtRiskNavigatorDirective, ProductProjectionListDirective, ProductProjectionListController, ProductProjectionChartDirective, ProductProjectionChartController, moduleName;
+  var AtRiskProductsOverTimeDirective, AtRiskProductsOverTimeController, AtRiskService, InventoryProjectionService, ProductsService, SupplyAndDemandHistoryService, InventoryDetailsService, ProductProjectionController, ProductProjectionDirective, AtRiskNavigatorController, AtRiskNavigatorDirective, ProductProjectionListDirective, ProductProjectionListController, ProductProjectionChartDirective, ProductProjectionChartController, InventoryProjectionTweaksDirective, InventoryProjectionTweaksController, moduleName;
   return {
     setters: [function (_commonComponentsInventoryAt_risk_products_over_timeDirective) {
       AtRiskProductsOverTimeDirective = _commonComponentsInventoryAt_risk_products_over_timeDirective['default'];
@@ -510,13 +514,164 @@ System.register('js/common/components/inventory/inventory.module', ['common.comp
       ProductProjectionChartDirective = _commonComponentsInventoryProduct_projection_chartDirective['default'];
     }, function (_commonComponentsInventoryProduct_projection_chartController) {
       ProductProjectionChartController = _commonComponentsInventoryProduct_projection_chartController['default'];
+    }, function (_commonComponentsInventoryInventory_projection_tweaksDirective) {
+      InventoryProjectionTweaksDirective = _commonComponentsInventoryInventory_projection_tweaksDirective['default'];
+    }, function (_commonComponentsInventoryInventory_projection_tweaksController) {
+      InventoryProjectionTweaksController = _commonComponentsInventoryInventory_projection_tweaksController['default'];
     }],
     execute: function () {
       moduleName = 'common.components.inventory';
 
-      angular.module(moduleName, []).directive('atRiskProductsOverTime', AtRiskProductsOverTimeDirective.builder).controller('AtRiskProductsOverTimeController', AtRiskProductsOverTimeController).service('ProductsService', ProductsService).service('InventoryProjectionService', InventoryProjectionService).service('AtRiskService', AtRiskService).service('SupplyAndDemandHistoryService', SupplyAndDemandHistoryService).service('InventoryDetailsService', InventoryDetailsService).controller('ProductProjectionController', ProductProjectionController).directive('productProjection', ProductProjectionDirective.builder).controller('ProductProjectionListController', ProductProjectionListController).directive('productProjectionList', ProductProjectionListDirective.builder).controller('ProductProjectionChartController', ProductProjectionChartController).directive('productProjectionChart', ProductProjectionChartDirective.builder).controller('AtRiskNavigatorController', AtRiskNavigatorController).directive('atRiskNavigator', AtRiskNavigatorDirective.builder);
+      angular.module(moduleName, ['ngAnimate', 'mgcrea.ngStrap', 'ui.select']).directive('atRiskProductsOverTime', AtRiskProductsOverTimeDirective.builder).controller('AtRiskProductsOverTimeController', AtRiskProductsOverTimeController).service('ProductsService', ProductsService).service('InventoryProjectionService', InventoryProjectionService).service('AtRiskService', AtRiskService).service('SupplyAndDemandHistoryService', SupplyAndDemandHistoryService).service('InventoryDetailsService', InventoryDetailsService).controller('ProductProjectionController', ProductProjectionController).directive('productProjection', ProductProjectionDirective.builder).controller('ProductProjectionListController', ProductProjectionListController).directive('productProjectionList', ProductProjectionListDirective.builder).controller('ProductProjectionChartController', ProductProjectionChartController).directive('productProjectionChart', ProductProjectionChartDirective.builder).controller('InventoryProjectionTweaksController', InventoryProjectionTweaksController).directive('inventoryProjectionTweaks', InventoryProjectionTweaksDirective.builder).controller('AtRiskNavigatorController', AtRiskNavigatorController).directive('atRiskNavigator', AtRiskNavigatorDirective.builder);
 
       _export('default', moduleName);
+    }
+  };
+});
+System.register('js/common/components/inventory/inventory_projection_tweaks.controller', [], function (_export) {
+  'use strict';
+
+  var InventoryProjectionTweaksController;
+
+  var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+  return {
+    setters: [],
+    execute: function () {
+      InventoryProjectionTweaksController = (function () {
+        function InventoryProjectionTweaksController($rootScope, $scope, AtRiskService, SupplyAndDemandHistoryService) {
+          _classCallCheck(this, InventoryProjectionTweaksController);
+
+          this.$rootScope = $rootScope;
+          this.$scope = $scope;
+
+          this.atRiskService = AtRiskService;
+          this.supplyAndDemandHistoryService = SupplyAndDemandHistoryService;
+
+          this.tweakProduct = {};
+
+          this.tweakEvent = {};
+
+          this.tweaksOptions = {
+            type: ['supply', 'demand'],
+            channel: ['ecom', 'wholesale', 'retail'],
+            source: ['jde', 'www', 'assumption'],
+            customer: ['shop', 'bundle', 'vip']
+          };
+
+          this.tweaksPrototype = {
+            variability: {},
+            demand: {},
+            events: {
+              supply: {},
+              demand: {}
+            }
+          };
+
+          this.watchProductSelection();
+          this.populateProducts();
+        }
+
+        _createClass(InventoryProjectionTweaksController, [{
+          key: 'addNewEvent',
+          value: function addNewEvent() {
+            console.log("Adding", this.tweakEvent);
+
+            this.supplyAndDemandHistoryService.addTweak(this.tweakEvent);
+
+            this.tweakEvent = {};
+
+            this.broadcastUpdate();
+          }
+        }, {
+          key: 'updateSelectedProduct',
+          value: function updateSelectedProduct(product) {
+            console.warn("Updating selected product:", product);
+            this.tweakEvent = {
+              product: product
+            };
+          }
+        }, {
+          key: 'watchProductSelection',
+          value: function watchProductSelection() {
+            var _this = this;
+
+            this.$scope.$watch(function () {
+              return _this.tweakProduct.selected;
+            }, function (newValue) {
+              _this.updateSelectedProduct(newValue);
+            });
+          }
+        }, {
+          key: 'populateProducts',
+          value: function populateProducts() {
+            var _this2 = this;
+
+            return this.atRiskService.getAtRiskProducts().then(function (products) {
+              _this2.products = products;
+              _this2.tweaks = {};
+
+              _.each(_this2.products, function (p) {});
+            });
+          }
+        }, {
+          key: 'updateVariabilityForProduct',
+          value: function updateVariabilityForProduct(product, type, variability) {
+            this.supplyAndDemandHistoryService.updateVariability(product, {
+              type: variability
+            });
+
+            this.broadcastUpdate();
+          }
+        }, {
+          key: 'broadcastUpdate',
+          value: function broadcastUpdate() {
+            this.$rootScope.$broadcast('inventory-tweaks-updated', {});
+          }
+        }]);
+
+        return InventoryProjectionTweaksController;
+      })();
+
+      _export('default', InventoryProjectionTweaksController);
+    }
+  };
+});
+System.register('js/common/components/inventory/inventory_projection_tweaks.directive', [], function (_export) {
+  'use strict';
+
+  var InventoryProjectionTweaksDirective;
+
+  var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+  return {
+    setters: [],
+    execute: function () {
+      InventoryProjectionTweaksDirective = (function () {
+        function InventoryProjectionTweaksDirective() {
+          _classCallCheck(this, InventoryProjectionTweaksDirective);
+
+          this.scope = {};
+          this.controller = 'InventoryProjectionTweaksController';
+          this.controllerAs = 'vm';
+          this.templateUrl = 'js/common/components/inventory/inventory_projection_tweaks_display.template.html';
+        }
+
+        _createClass(InventoryProjectionTweaksDirective, null, [{
+          key: 'builder',
+          value: function builder() {
+            return new InventoryProjectionTweaksDirective();
+          }
+        }]);
+
+        return InventoryProjectionTweaksDirective;
+      })();
+
+      _export('default', InventoryProjectionTweaksDirective);
     }
   };
 });
@@ -525,22 +680,58 @@ System.register('js/common/components/inventory/product_projection.controller', 
 
   var ProductProjectionController;
 
+  var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
   return {
     setters: [],
     execute: function () {
-      ProductProjectionController = function ProductProjectionController(SupplyAndDemandHistoryService) {
-        var _this = this;
+      ProductProjectionController = (function () {
+        function ProductProjectionController($scope, SupplyAndDemandHistoryService) {
+          _classCallCheck(this, ProductProjectionController);
 
-        _classCallCheck(this, ProductProjectionController);
+          this.$scope = $scope;
+          this.supplyAndDemandHistoryService = SupplyAndDemandHistoryService;
 
-        console.warn(this.product);
+          this.populateHistory();
 
-        SupplyAndDemandHistoryService.getHistoryForProduct(moment().subtract(30, 'days'), moment().add(14, 'days'), this.product).then(function (history) {
-          _this.historicalData = history;
-        });
-      };
+          this.listenForHistoricalDataUpdate();
+        }
+
+        _createClass(ProductProjectionController, [{
+          key: 'populateHistory',
+          value: function populateHistory() {
+            var _this = this;
+
+            this.requestHistory().then(function (history) {
+              _this.historicalData = history;
+            });
+          }
+        }, {
+          key: 'requestHistory',
+          value: function requestHistory() {
+            return this.supplyAndDemandHistoryService.getHistoryForProduct(moment().subtract(30, 'days').startOf('day'), moment().add(14, 'days').startOf('day'), this.product);
+          }
+        }, {
+          key: 'handleHistoricalDataUpdate',
+          value: function handleHistoricalDataUpdate() {
+            this.populateHistory();
+          }
+        }, {
+          key: 'listenForHistoricalDataUpdate',
+          value: function listenForHistoricalDataUpdate() {
+            var _this2 = this;
+
+            this.$scope.$on('inventory-tweaks-updated', function (e) {
+              console.warn("got inventory update");
+              _this2.handleHistoricalDataUpdate();
+            });
+          }
+        }]);
+
+        return ProductProjectionController;
+      })();
 
       _export('default', ProductProjectionController);
     }
@@ -604,6 +795,11 @@ System.register("js/common/components/inventory/product_projection_chart.control
           this.$scope = $scope;
           this.chartConfig = this.produceChartConfig();
 
+          this.seriesIndexes = {
+            inventory: 10,
+            inventoryWarnings: 11
+          };
+
           this.watchChartDataUpdates();
         }
 
@@ -636,6 +832,7 @@ System.register("js/common/components/inventory/product_projection_chart.control
             });
 
             return {
+              zIndex: this.seriesIndexes.inventoryWarnings,
               id: 'inventory-warnings',
               name: 'inventory warnings',
               type: 'flags',
@@ -655,10 +852,10 @@ System.register("js/common/components/inventory/product_projection_chart.control
 
             var dayCounts = _.map(days, function (dayData, key) {
               var count = _.reduce(dayData, function (result, dataPoint) {
-                return result += dataPoint.demand;
+                return result += dataPoint.quantity;
               }, 0);
-
-              return [moment(key).utc().valueOf(), startingCount -= count];
+              console.warn("key:", key);
+              return [moment(key).startOf('day').utc().valueOf(), startingCount -= count];
             });
 
             return dayCounts;
@@ -674,6 +871,8 @@ System.register("js/common/components/inventory/product_projection_chart.control
             });
 
             return {
+              id: 'inventory',
+              zIndex: this.seriesIndexes.inventory,
               name: 'inventory',
               type: 'line',
               yAxis: 1,
@@ -710,7 +909,7 @@ System.register("js/common/components/inventory/product_projection_chart.control
             });
 
             newSeries.push(this.synthesizeInventorySeries(history));
-            //newSeries.push( this.synthesizeFlagSeries(history) );
+            newSeries.push(this.synthesizeFlagSeries(history));
 
             _.each(newSeries, function (s, index) {
               s.color = Highcharts.Color('#CCCCCC').brighten((index - 4) / 10).get();
@@ -722,7 +921,7 @@ System.register("js/common/components/inventory/product_projection_chart.control
           key: "convertHistoryToSeriesData",
           value: function convertHistoryToSeriesData(history) {
             return history.map(function (h) {
-              return [h.day.utc().valueOf(), h.demand];
+              return [h.day.utc().valueOf(), h.quantity];
             });
           }
         }, {
@@ -994,6 +1193,8 @@ System.register('js/common/services/inventory/supply_and_demand_history.service'
           this.$q = $q;
           this.$timeout = $timeout;
 
+          this.tweaks = [];
+
           this.estimatedVariability = {
             1: {
               'bundle': 0.15,
@@ -1009,49 +1210,49 @@ System.register('js/common/services/inventory/supply_and_demand_history.service'
 
           this.estimatedDemandAverages = {
             1: {
-              'bundle': { channel: 'ecom', source: 'bundle', qty: 1000, nature: 'demand' },
-              'shop': { channel: 'ecom', source: 'shop', qty: 300, nature: 'demand' },
-              'retail': { channel: 'retail', source: 'target', qty: 250, nature: 'demand' }
+              'bundle': { channel: 'ecom', source: 'bundle', qty: 1000, type: 'demand' },
+              'shop': { channel: 'ecom', source: 'shop', qty: 300, type: 'demand' },
+              'retail': { channel: 'retail', source: 'target', qty: 250, type: 'demand' }
             },
             332: {
-              'bundle': { channel: 'ecom', source: 'bundle', qty: 500, nature: 'demand' },
-              'shop': { channel: 'ecom', source: 'shop', qty: 100, nature: 'demand' },
-              'retail': { channel: 'retail', source: 'target', qty: 50, nature: 'demand' }
+              'bundle': { channel: 'ecom', source: 'bundle', qty: 500, type: 'demand' },
+              'shop': { channel: 'ecom', source: 'shop', qty: 100, type: 'demand' },
+              'retail': { channel: 'retail', source: 'target', qty: 50, type: 'demand' }
             },
             288: {
-              'bundle': { channel: 'ecom', source: 'bundle', qty: 750, nature: 'demand' },
-              'shop': { channel: 'ecom', source: 'shop', qty: 150, nature: 'demand' },
-              'retail': { channel: 'retail', source: 'target', qty: 300, nature: 'demand' }
+              'bundle': { channel: 'ecom', source: 'bundle', qty: 750, type: 'demand' },
+              'shop': { channel: 'ecom', source: 'shop', qty: 150, type: 'demand' },
+              'retail': { channel: 'retail', source: 'target', qty: 300, type: 'demand' }
             },
             328: {
-              'bundle': { channel: 'ecom', source: 'bundle', qty: 400, nature: 'demand' },
-              'shop': { channel: 'ecom', source: 'shop', qty: 100, nature: 'demand' },
-              'retail': { channel: 'retail', source: 'target', qty: 150, nature: 'demand' }
+              'bundle': { channel: 'ecom', source: 'bundle', qty: 400, type: 'demand' },
+              'shop': { channel: 'ecom', source: 'shop', qty: 100, type: 'demand' },
+              'retail': { channel: 'retail', source: 'target', qty: 150, type: 'demand' }
             },
             203: {
-              'bundle': { channel: 'ecom', source: 'bundle', qty: 300, nature: 'demand' },
-              'shop': { channel: 'ecom', source: 'shop', qty: 75, nature: 'demand' },
-              'retail': { channel: 'retail', source: 'target', qty: 10, nature: 'demand' }
+              'bundle': { channel: 'ecom', source: 'bundle', qty: 300, type: 'demand' },
+              'shop': { channel: 'ecom', source: 'shop', qty: 75, type: 'demand' },
+              'retail': { channel: 'retail', source: 'target', qty: 10, type: 'demand' }
             },
             246: {
-              'bundle': { channel: 'ecom', source: 'bundle', qty: 900, nature: 'demand' },
-              'shop': { channel: 'ecom', source: 'shop', qty: 100, nature: 'demand' },
-              'retail': { channel: 'retail', source: 'target', qty: 350, nature: 'demand' }
+              'bundle': { channel: 'ecom', source: 'bundle', qty: 900, type: 'demand' },
+              'shop': { channel: 'ecom', source: 'shop', qty: 100, type: 'demand' },
+              'retail': { channel: 'retail', source: 'target', qty: 350, type: 'demand' }
             },
             290: {
-              'bundle': { channel: 'ecom', source: 'bundle', qty: 500, nature: 'demand' },
-              'shop': { channel: 'ecom', source: 'shop', qty: 100, nature: 'demand' },
-              'retail': { channel: 'retail', source: 'target', qty: 400, nature: 'demand' }
+              'bundle': { channel: 'ecom', source: 'bundle', qty: 500, type: 'demand' },
+              'shop': { channel: 'ecom', source: 'shop', qty: 100, type: 'demand' },
+              'retail': { channel: 'retail', source: 'target', qty: 400, type: 'demand' }
             },
             334: {
-              'bundle': { channel: 'ecom', source: 'bundle', qty: 800, nature: 'demand' },
-              'shop': { channel: 'ecom', source: 'shop', qty: 250, nature: 'demand' },
-              'retail': { channel: 'retail', source: 'target', qty: 150, nature: 'demand' }
+              'bundle': { channel: 'ecom', source: 'bundle', qty: 800, type: 'demand' },
+              'shop': { channel: 'ecom', source: 'shop', qty: 250, type: 'demand' },
+              'retail': { channel: 'retail', source: 'target', qty: 150, type: 'demand' }
             },
             285: {
-              'bundle': { channel: 'ecom', source: 'bundle', qty: 125, nature: 'demand' },
-              'shop': { channel: 'ecom', source: 'shop', qty: 300, nature: 'demand' },
-              'retail': { channel: 'retail', source: 'target', qty: 200, nature: 'demand' }
+              'bundle': { channel: 'ecom', source: 'bundle', qty: 125, type: 'demand' },
+              'shop': { channel: 'ecom', source: 'shop', qty: 300, type: 'demand' },
+              'retail': { channel: 'retail', source: 'target', qty: 200, type: 'demand' }
             }
           };
         }
@@ -1096,17 +1297,68 @@ System.register('js/common/services/inventory/supply_and_demand_history.service'
             return Math.round(result);
           }
         }, {
-          key: 'synthesizeHistory',
-          value: function synthesizeHistory(dateRange, demandVariability, averageDemand) {
+          key: 'synthesizeDemand',
+          value: function synthesizeDemand(dateRange, demandVariability, averageDemand) {
             var _this = this;
 
             var history = [];
 
             dateRange.by('days', function (day) {
               _.each(averageDemand, function (data, source) {
-                history.push({ day: day, source: source, demand: _this.varyDemand(demandVariability, data.qty) });
+                console.warn('day:', day.valueOf());
+                history.push({ day: day, source: source, quantity: _this.varyDemand(demandVariability, data.qty) });
               });
             });
+
+            return history;
+          }
+        }, {
+          key: 'transformTweakToSequence',
+          value: function transformTweakToSequence(tweak) {
+            return {
+              day: moment(tweak.date, "M/D/YYYY").startOf('day'),
+              source: 'ex-' + tweak.customer,
+              quantity: parseInt(tweak.quantity)
+            };
+          }
+        }, {
+          key: 'addTweak',
+          value: function addTweak(tweak) {
+            this.tweaks.push(tweak);
+          }
+        }, {
+          key: 'clearTweaks',
+          value: function clearTweaks() {
+            this.tweaks.length = 0;
+          }
+        }, {
+          key: 'augmentHistoryWithAssumptions',
+          value: function augmentHistoryWithAssumptions(history) {
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+              for (var _iterator = this.tweaks[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                var tweak = _step.value;
+
+                console.warn("augmenting tweak", tweak);
+                history.push(this.transformTweakToSequence(tweak));
+              }
+            } catch (err) {
+              _didIteratorError = true;
+              _iteratorError = err;
+            } finally {
+              try {
+                if (!_iteratorNormalCompletion && _iterator['return']) {
+                  _iterator['return']();
+                }
+              } finally {
+                if (_didIteratorError) {
+                  throw _iteratorError;
+                }
+              }
+            }
 
             return history;
           }
@@ -1120,11 +1372,15 @@ System.register('js/common/services/inventory/supply_and_demand_history.service'
 
             var dateRange = moment.range(moment(startDate), moment(endDate));
 
-            var history = this.synthesizeHistory(dateRange, demandVariability, averageDemand);
+            var history = this.synthesizeDemand(dateRange, demandVariability, averageDemand);
+
+            var augmentedDemandHistory = this.augmentHistoryWithAssumptions(history);
+
+            var sortedDemandHistory = _.sortBy(augmentedDemandHistory, 'day');
 
             return this.$q(function (resolve, reject) {
               _this2.$timeout(function () {
-                resolve(history);
+                resolve(augmentedDemandHistory);
               });
             });
           }

@@ -1,14 +1,10 @@
 class AtRiskNavigatorController {
-  constructor($scope) {
-    this.atRiskProducts = $scope.atRiskProducts = [];
-    console.warn('nav scope',$scope);
+  constructor($scope,$aside) {
+    this.$scope = $scope;
+    this.$aside = $aside;
 
-  }
-
-  addNewProduct() {
-    console.warn("nav vm adding new");
-
-    this.atRiskProducts.push({name:"another"});
+    this.tweaksDisplayed = false;
+    this.atRiskProducts = [];
   }
 
   updateSelectedProducts(products) {
@@ -21,7 +17,23 @@ class AtRiskNavigatorController {
     });
   }
 
-  saySomething() {}
+  collapseTweaks() {
+
+  }
+
+  expandTweaks() {
+    let tweaks = this.$aside({
+      title: 'Tweaks',
+      templateUrl: 'js/common/components/inventory/inventory_projection_tweaks.template.html'
+    });
+
+    tweaks.$promise.then( () => {
+      tweaks.show();
+    });
+  }
+  toggleTweaks() {
+    return this.tweaksDisplayed ? this.collapseTweaks() : this.expandTweaks();
+  }
 }
 
 export default AtRiskNavigatorController;

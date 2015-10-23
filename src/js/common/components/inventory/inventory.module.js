@@ -19,10 +19,13 @@ import ProductProjectionListController from 'common.components.inventory.product
 import ProductProjectionChartDirective from 'common.components.inventory.product_projection_chart.directive';
 import ProductProjectionChartController from 'common.components.inventory.product_projection_chart.controller';
 
+import InventoryProjectionTweaksDirective from 'common.components.inventory.inventory_projection_tweaks.directive';
+import InventoryProjectionTweaksController from 'common.components.inventory.inventory_projection_tweaks.controller';
+
 
 var moduleName = 'common.components.inventory';
 
-angular.module(moduleName, [])
+angular.module(moduleName, ['ngAnimate','mgcrea.ngStrap', 'ui.select'])
   .directive('atRiskProductsOverTime', AtRiskProductsOverTimeDirective.builder)
   .controller('AtRiskProductsOverTimeController', AtRiskProductsOverTimeController)
 
@@ -31,7 +34,7 @@ angular.module(moduleName, [])
   .service('AtRiskService', AtRiskService)
   .service('SupplyAndDemandHistoryService', SupplyAndDemandHistoryService)
   .service('InventoryDetailsService', InventoryDetailsService)
-  
+
   .controller('ProductProjectionController', ProductProjectionController )
   .directive('productProjection', ProductProjectionDirective.builder)
 
@@ -41,6 +44,8 @@ angular.module(moduleName, [])
   .controller('ProductProjectionChartController', ProductProjectionChartController )
   .directive('productProjectionChart', ProductProjectionChartDirective.builder )
 
+  .controller('InventoryProjectionTweaksController', InventoryProjectionTweaksController)
+  .directive('inventoryProjectionTweaks', InventoryProjectionTweaksDirective.builder)
 
   .controller('AtRiskNavigatorController', AtRiskNavigatorController)
   .directive('atRiskNavigator', AtRiskNavigatorDirective.builder);

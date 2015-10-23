@@ -1,0 +1,60 @@
+div.row 
+  div.col-xs-12
+    ui-select ng-model="vm.tweakProduct.selected" theme="bootstrap"
+      ui-select-match placeholder="Enter product name..." {{$select.selected.name}}
+      ui-select-choices repeat="product in vm.products | filter: $select.search"
+        span ng-bind-html="product.name | highlight: $select.search"
+    hr
+div.row
+  div.col-xs-12
+    h4 Projections
+  div.col-xs-12 Demand Variability
+div.row
+  div.col-xs-4 bundle
+  div.col-xs-4 shop
+  dev.col-xs-4 retail
+div.row
+  div.col-xs-4
+    input.form-control type="text"
+  div.col-xs-4
+    input.form-control type="text"
+  div.col-xs-4
+    input.form-control type="text"
+div.row
+  div.col-xs-12 
+    h4 Events
+div.row
+  div.col-xs-12 
+    div.row
+      div.col-xs-6
+        input.form-control id="date" type="text" ng-model="vm.tweakEvent.date" placeholder="10/27/2015"
+      div.col-xs-6
+        ui-select ng-model="vm.tweakEvent.type" theme="bootstrap"
+          ui-select-match placeholder="Type" {{$select.selected}}
+          ui-select-choices repeat="type in vm.tweaksOptions.type | filter: $select.search"
+            span ng-bind-html="type | highlight: $select.search"
+    div.row
+      div.col-xs-6
+        ui-select ng-model="vm.tweakEvent.channel" theme="bootstrap"
+          ui-select-match placeholder="Channel" {{$select.selected}}
+          ui-select-choices repeat="channel in vm.tweaksOptions.channel | filter: $select.search"
+            span ng-bind-html="channel | highlight: $select.search"
+      div.col-xs-6
+        ui-select ng-model="vm.tweakEvent.customer" theme="bootstrap"
+          ui-select-match placeholder="Customer" {{$select.selected}}
+          ui-select-choices repeat="customer in vm.tweaksOptions.customer | filter: $select.search"
+            span ng-bind-html="customer | highlight: $select.search"
+    div.row
+      div.col-xs-6
+        ui-select ng-model="vm.tweakEvent.source" theme="bootstrap"
+          ui-select-match placeholder="Source" {{$select.selected}}
+          ui-select-choices repeat="source in vm.tweaksOptions.source | filter: $select.search"
+            span ng-bind-html="source | highlight: $select.search"
+      div.col-xs-6
+        input.form-control type="text" ng-model="vm.tweakEvent.quantity" placeholder="quantity"
+    div.row
+      div.col-xs-12
+        button title="Create" ng-click="vm.addNewEvent()"
+        
+        
+        

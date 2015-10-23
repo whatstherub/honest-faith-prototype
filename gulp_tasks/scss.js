@@ -7,10 +7,15 @@ import path from 'path';
 import wiredep from 'wiredep';
 import autoprefixer from 'gulp-autoprefixer';
 
-gulp.task('scss', ['css:application', 'css:libraries']);
+gulp.task('scss', ['css:application', 'css:libraries', 'fontawesome']);
 
-var bowerGlob = '**/*.scss',
+var bowerGlob = ['**/*.scss','**/*.css'],
     bowerConfig = { base: 'vendor/assets/bower_components' };
+
+gulp.task('fontawesome', function() {
+  return gulp.src( bowerConfig.base + '/font-awesome/fonts/**.*')
+    .pipe(gulp.dest('assets/fonts'));
+});
 
 gulp.task('css:application', function(){
   var scssLoadPaths = mainBowerFiles(bowerGlob, bowerConfig)

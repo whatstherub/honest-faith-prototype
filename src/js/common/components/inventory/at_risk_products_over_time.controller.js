@@ -4,7 +4,7 @@ class AtRiskProductsOverTimeController {
     this.$log   = $log;
     this.$scope = $scope;
 
-    $scope.chartConfig = this.chartConfig = this.produceChartConfig();
+    this.chartConfig = this.produceChartConfig();
 
     let atRiskProductsLoaded = AtRiskService.getAtRiskProducts();
 
@@ -118,12 +118,6 @@ class AtRiskProductsOverTimeController {
       xAxis: [{
         type: 'datetime',
         reversed: false
-      },{
-        type: 'datetime',
-        opposite: true,
-        reversed: false,
-        linkedTo: 0
-
       }],
       yAxis: {
         title: {

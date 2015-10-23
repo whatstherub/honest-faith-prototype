@@ -27,7 +27,10 @@ System.config({
     "common.components.inventory.at_risk_navigator.directive": "js/common/components/inventory/at_risk_navigator.directive",
 
     "common.components.inventory.product_projection_chart.controller": "js/common/components/inventory/product_projection_chart.controller",
-    "common.components.inventory.product_projection_chart.directive": "js/common/components/inventory/product_projection_chart.directive"
+    "common.components.inventory.product_projection_chart.directive": "js/common/components/inventory/product_projection_chart.directive",
+
+    "common.components.inventory.inventory_projection_tweaks.controller": "js/common/components/inventory/inventory_projection_tweaks.controller",
+    "common.components.inventory.inventory_projection_tweaks.directive": "js/common/components/inventory/inventory_projection_tweaks.directive"
 
   }
 });

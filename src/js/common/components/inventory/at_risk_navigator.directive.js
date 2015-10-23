@@ -8,11 +8,7 @@ class AtRiskNavigatorDirective {
   }
 
   link(scope, element, attrs, controllers, transclude) {
-    scope.atRiskProducts = [{name:'test'}];
-
-    transclude(scope.$parent, (clone,scope) => {
-      element.append(clone);
-    });
+    
   }
 
   static builder() {

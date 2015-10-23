@@ -3,6 +3,11 @@ class ProductProjectionChartController {
     this.$scope = $scope;
     this.chartConfig = this.produceChartConfig();
 
+    this.seriesIndexes = {
+      inventory: 10,
+      inventoryWarnings: 11
+    };
+
     this.watchChartDataUpdates();
   }
 
@@ -28,6 +33,7 @@ class ProductProjectionChartController {
     });
 
     return {
+      zIndex: this.seriesIndexes.inventoryWarnings,
       id: 'inventory-warnings',
       name: 'inventory warnings',
       type: 'flags',
@@ -46,10 +52,10 @@ class ProductProjectionChartController {
 
     let dayCounts = _.map(days, (dayData,key) => {
       let count = _.reduce(dayData, (result,dataPoint) => {
-        return result += dataPoint.demand;
+        return result += dataPoint.quantity;
       },0);
-
-      return [ moment(key).utc().valueOf(), startingCount -= count ];
+      console.warn("key:",key);
+      return [ moment(key).startOf('day').utc().valueOf(), startingCount -= count ];
     });
 
     return dayCounts;
@@ -62,6 +68,8 @@ class ProductProjectionChartController {
     let daySeries = _.sortBy( dayCounts, (c) => ( c[0] ) );
 
     return {
+      id: 'inventory',
+      zIndex: this.seriesIndexes.inventory,
       name: 'inventory',
       type: 'line',
       yAxis: 1,
@@ -95,7 +103,7 @@ class ProductProjectionChartController {
     });
 
     newSeries.push( this.synthesizeInventorySeries(history) );
-    //newSeries.push( this.synthesizeFlagSeries(history) );
+    newSeries.push( this.synthesizeFlagSeries(history) );
 
     _.each( newSeries, (s,index) => {
       s.color = Highcharts.Color('#CCCCCC').brighten((index - 4)/10).get();
@@ -106,7 +114,7 @@ class ProductProjectionChartController {
 
   convertHistoryToSeriesData(history) {
     return history.map( (h) => {
-      return [ h.day.utc().valueOf(), h.demand ];
+      return [ h.day.utc().valueOf(), h.quantity ];
     });
   }
 

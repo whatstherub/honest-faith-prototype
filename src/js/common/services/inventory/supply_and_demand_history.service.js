@@ -4,6 +4,8 @@ class SupplyAndDemandHistoryService {
     this.$q = $q;
     this.$timeout = $timeout;
 
+    this.tweaks = [];
+
     this.estimatedVariability = {
       1: {
         'bundle': 0.15,
@@ -19,49 +21,49 @@ class SupplyAndDemandHistoryService {
 
     this.estimatedDemandAverages = {
       1: {
-        'bundle': { channel: 'ecom'   , source: 'bundle', qty: 1000 , nature: 'demand' },
-        'shop':   { channel: 'ecom'   , source: 'shop'  , qty: 300  , nature: 'demand' },
-        'retail': { channel: 'retail' , source: 'target', qty: 250  , nature: 'demand' }
+        'bundle': { channel: 'ecom'   , source: 'bundle', qty: 1000 , type: 'demand' },
+        'shop':   { channel: 'ecom'   , source: 'shop'  , qty: 300  , type: 'demand' },
+        'retail': { channel: 'retail' , source: 'target', qty: 250  , type: 'demand' }
       },
       332: {
-        'bundle': { channel: 'ecom'   , source: 'bundle', qty: 500 , nature: 'demand' },
-        'shop':   { channel: 'ecom'   , source: 'shop'  , qty: 100  , nature: 'demand' },
-        'retail': { channel: 'retail' , source: 'target', qty: 50  , nature: 'demand' }
+        'bundle': { channel: 'ecom'   , source: 'bundle', qty: 500 , type: 'demand' },
+        'shop':   { channel: 'ecom'   , source: 'shop'  , qty: 100  , type: 'demand' },
+        'retail': { channel: 'retail' , source: 'target', qty: 50  , type: 'demand' }
       },
       288: {
-        'bundle': { channel: 'ecom'   , source: 'bundle', qty: 750 , nature: 'demand' },
-        'shop':   { channel: 'ecom'   , source: 'shop'  , qty: 150  , nature: 'demand' },
-        'retail': { channel: 'retail' , source: 'target', qty: 300  , nature: 'demand' }
+        'bundle': { channel: 'ecom'   , source: 'bundle', qty: 750 , type: 'demand' },
+        'shop':   { channel: 'ecom'   , source: 'shop'  , qty: 150  , type: 'demand' },
+        'retail': { channel: 'retail' , source: 'target', qty: 300  , type: 'demand' }
       },
       328: {
-        'bundle': { channel: 'ecom'   , source: 'bundle', qty: 400 , nature: 'demand' },
-        'shop':   { channel: 'ecom'   , source: 'shop'  , qty: 100  , nature: 'demand' },
-        'retail': { channel: 'retail' , source: 'target', qty: 150  , nature: 'demand' }
+        'bundle': { channel: 'ecom'   , source: 'bundle', qty: 400 , type: 'demand' },
+        'shop':   { channel: 'ecom'   , source: 'shop'  , qty: 100  , type: 'demand' },
+        'retail': { channel: 'retail' , source: 'target', qty: 150  , type: 'demand' }
       },
       203: {
-        'bundle': { channel: 'ecom'   , source: 'bundle', qty: 300 , nature: 'demand' },
-        'shop':   { channel: 'ecom'   , source: 'shop'  , qty: 75  , nature: 'demand' },
-        'retail': { channel: 'retail' , source: 'target', qty: 10  , nature: 'demand' }
+        'bundle': { channel: 'ecom'   , source: 'bundle', qty: 300 , type: 'demand' },
+        'shop':   { channel: 'ecom'   , source: 'shop'  , qty: 75  , type: 'demand' },
+        'retail': { channel: 'retail' , source: 'target', qty: 10  , type: 'demand' }
       },
       246: {
-        'bundle': { channel: 'ecom'   , source: 'bundle', qty: 900 , nature: 'demand' },
-        'shop':   { channel: 'ecom'   , source: 'shop'  , qty: 100  , nature: 'demand' },
-        'retail': { channel: 'retail' , source: 'target', qty: 350  , nature: 'demand' }
+        'bundle': { channel: 'ecom'   , source: 'bundle', qty: 900 , type: 'demand' },
+        'shop':   { channel: 'ecom'   , source: 'shop'  , qty: 100  , type: 'demand' },
+        'retail': { channel: 'retail' , source: 'target', qty: 350  , type: 'demand' }
       },
       290: {
-        'bundle': { channel: 'ecom'   , source: 'bundle', qty: 500 , nature: 'demand' },
-        'shop':   { channel: 'ecom'   , source: 'shop'  , qty: 100  , nature: 'demand' },
-        'retail': { channel: 'retail' , source: 'target', qty: 400  , nature: 'demand' }
+        'bundle': { channel: 'ecom'   , source: 'bundle', qty: 500 , type: 'demand' },
+        'shop':   { channel: 'ecom'   , source: 'shop'  , qty: 100  , type: 'demand' },
+        'retail': { channel: 'retail' , source: 'target', qty: 400  , type: 'demand' }
       },
       334: {
-        'bundle': { channel: 'ecom'   , source: 'bundle', qty: 800 , nature: 'demand' },
-        'shop':   { channel: 'ecom'   , source: 'shop'  , qty: 250  , nature: 'demand' },
-        'retail': { channel: 'retail' , source: 'target', qty: 150  , nature: 'demand' }
+        'bundle': { channel: 'ecom'   , source: 'bundle', qty: 800 , type: 'demand' },
+        'shop':   { channel: 'ecom'   , source: 'shop'  , qty: 250  , type: 'demand' },
+        'retail': { channel: 'retail' , source: 'target', qty: 150  , type: 'demand' }
       },
       285: {
-        'bundle': { channel: 'ecom'   , source: 'bundle', qty: 125 , nature: 'demand' },
-        'shop':   { channel: 'ecom'   , source: 'shop'  , qty: 300  , nature: 'demand' },
-        'retail': { channel: 'retail' , source: 'target', qty: 200  , nature: 'demand' }
+        'bundle': { channel: 'ecom'   , source: 'bundle', qty: 125 , type: 'demand' },
+        'shop':   { channel: 'ecom'   , source: 'shop'  , qty: 300  , type: 'demand' },
+        'retail': { channel: 'retail' , source: 'target', qty: 200  , type: 'demand' }
       }
     }
   }
@@ -85,6 +87,7 @@ class SupplyAndDemandHistoryService {
   getHistoricalDemandAverageForProductWithSource( product ) {
     return this.estimatedDemandAverages[ product.id ]
   }
+
   getHistoricalDemandAverageForProduct( product ) {
     return this.estimatedDemandAverages[ product.id ]['bundle']['qty'];
   }
@@ -99,14 +102,40 @@ class SupplyAndDemandHistoryService {
     return Math.round(result);
   }
 
-  synthesizeHistory(dateRange,demandVariability,averageDemand) {
+  synthesizeDemand(dateRange,demandVariability,averageDemand) {
     var history = [];
 
     dateRange.by('days', (day) => {
       _.each( averageDemand, (data,source) => {
-        history.push( { day: day, source: source, demand: this.varyDemand(demandVariability,data.qty) } );
+        console.warn('day:',day.valueOf());
+        history.push( { day: day, source: source, quantity: this.varyDemand(demandVariability,data.qty) } );
       });
     });
+
+    return history;
+  }
+
+  transformTweakToSequence( tweak ) {
+    return {
+      day: moment(tweak.date, "M/D/YYYY").startOf('day'),
+      source: 'ex-' + tweak.customer,
+      quantity: parseInt(tweak.quantity)
+    }
+  }
+
+  addTweak( tweak ) {
+    this.tweaks.push( tweak );
+  }
+
+  clearTweaks() {
+    this.tweaks.length = 0;
+  }
+
+  augmentHistoryWithAssumptions(history) {
+    for( let tweak of this.tweaks ) {
+      console.warn("augmenting tweak",tweak);
+      history.push( this.transformTweakToSequence(tweak) );
+    }
 
     return history;
   }
@@ -117,10 +146,14 @@ class SupplyAndDemandHistoryService {
 
     let dateRange = moment.range(moment(startDate),moment(endDate));
 
-    let history = this.synthesizeHistory(dateRange,demandVariability,averageDemand);
+    let history = this.synthesizeDemand(dateRange,demandVariability,averageDemand);
+
+    let augmentedDemandHistory = this.augmentHistoryWithAssumptions(history);
+
+    let sortedDemandHistory = _.sortBy(augmentedDemandHistory, 'day');
 
     return this.$q( (resolve,reject) => {
-      this.$timeout( () => { resolve(history) } );
+      this.$timeout( () => { resolve(augmentedDemandHistory) } );
     });
   }
 }
