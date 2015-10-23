@@ -5,6 +5,7 @@ import AtRiskService from 'common.services.inventory.atrisk.service';
 import InventoryProjectionService from 'common.services.inventory.inventory_projection.service';
 import ProductsService from 'common.services.inventory.products.service';
 import SupplyAndDemandHistoryService from 'common.services.inventory.supply_and_demand_history.service';
+import InventoryDetailsService from 'common.services.inventory.inventory_details.service';
 
 import ProductProjectionController from 'common.components.inventory.product_projection.controller';
 import ProductProjectionDirective  from 'common.components.inventory.product_projection.directive';
@@ -29,7 +30,8 @@ angular.module(moduleName, [])
   .service('InventoryProjectionService', InventoryProjectionService)
   .service('AtRiskService', AtRiskService)
   .service('SupplyAndDemandHistoryService', SupplyAndDemandHistoryService)
-
+  .service('InventoryDetailsService', InventoryDetailsService)
+  
   .controller('ProductProjectionController', ProductProjectionController )
   .directive('productProjection', ProductProjectionDirective.builder)
 

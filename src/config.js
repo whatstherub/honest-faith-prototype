@@ -15,6 +15,7 @@ System.config({
     "common.services.inventory.products.service": "js/common/services/inventory/products.service",
     "common.services.inventory.inventory_projection.service": "js/common/services/inventory/inventory_projection.service",
     "common.services.inventory.supply_and_demand_history.service": "js/common/services/inventory/supply_and_demand_history.service",
+    "common.services.inventory.inventory_details.service": "js/common/services/inventory/inventory_details.service",
 
     "common.components.inventory.product_projection.controller": "js/common/components/inventory/product_projection.controller",
     "common.components.inventory.product_projection.directive": "js/common/components/inventory/product_projection.directive",
