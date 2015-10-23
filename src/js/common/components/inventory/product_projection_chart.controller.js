@@ -13,7 +13,31 @@ class ProductProjectionChartController {
     })
   }
 
-  synthesizeInventorySeries(history) {
+  synthesizeFlagSeries(history) {
+    let dayCounts = this.calculateTotalDemandByDay(history);
+
+    var data = [];
+
+    _.find( dayCounts, (c) => {
+      if( c[1] <= 0 ) {
+        data.push({ x: c[0], title: "Out of stock"});
+        console.warn("found OOS");
+        return true;
+      }
+      return false;
+    });
+
+    return {
+      id: 'inventory-warnings',
+      name: 'inventory warnings',
+      type: 'flags',
+      shape: 'squarepin',
+      onSeries: 'inventory',
+      data: data
+    }
+  }
+
+  calculateTotalDemandByDay(history) {
     let startingCount = 55000;
 
     let days = _.groupBy(history, (h) => {
@@ -28,12 +52,14 @@ class ProductProjectionChartController {
       return [ moment(key).utc().valueOf(), startingCount -= count ];
     });
 
+    return dayCounts;
+  }
+
+  synthesizeInventorySeries(history) {
+
+    let dayCounts = this.calculateTotalDemandByDay(history);
+
     let daySeries = _.sortBy( dayCounts, (c) => ( c[0] ) );
-
-
-    console.warn('day counts', daySeries);
-    console.warn('history',history);
-    console.warn('days',days);
 
     return {
       name: 'inventory',
@@ -69,6 +95,7 @@ class ProductProjectionChartController {
     });
 
     newSeries.push( this.synthesizeInventorySeries(history) );
+    //newSeries.push( this.synthesizeFlagSeries(history) );
 
     _.each( newSeries, (s,index) => {
       s.color = Highcharts.Color('#CCCCCC').brighten((index - 4)/10).get();

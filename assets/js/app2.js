@@ -161,6 +161,249 @@ System.register('js/app/hello/hello.module', ['app.hello.controller', 'app.hello
     }
   };
 });
+System.register('js/common/services/inventory/atrisk.service', [], function (_export) {
+  'use strict';
+
+  var AtRiskService;
+
+  var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+  return {
+    setters: [],
+    execute: function () {
+      AtRiskService = (function () {
+        function AtRiskService($q, $timeout, ProductsService, InventoryProjectionService) {
+          _classCallCheck(this, AtRiskService);
+
+          this.$q = $q;
+          this.$timeout = $timeout;
+        }
+
+        _createClass(AtRiskService, [{
+          key: 'getAtRiskProducts',
+          value: function getAtRiskProducts() {
+            var _this = this;
+
+            var products = [{ id: 1, sku: 'DIAPERS', name: 'Diapers', atRisk: '10/21/2015', dropDead: '10/31/2015', threshold: 10000 }, { id: 332, sku: 'LOTION-AP', name: 'Lotion - Apricot', atRisk: '10/25/2015', dropDead: '11/2/2015', threshold: 5000 }, { id: 288, sku: 'EYE-CREAM', name: 'Eye Cream', atRisk: '10/24/2015', dropDead: '11/2/2015', threshold: 3000 }, { id: 328, sku: 'CONDITIONER-AP', name: 'Conditioner - Apricot', atRisk: '10/28/2015', dropDead: '11/3/2015', threshold: 2000 }, { id: 203, sku: 'DHA', name: 'Baby DHA', atRisk: '11/2/2015', dropDead: '11/8/2015', threshold: 5000 }, { id: 246, sku: 'TOOTHBRUSH', name: 'Adult Toothbrush', atRisk: '11/10/2015', dropDead: '11/20/2015', threshold: 5000 }, { id: 290, sku: 'REFRESH', name: 'Refresh Clean Gel', atRisk: '11/1/2015', dropDead: '11/22/2015', threshold: 3000 }, { id: 334, sku: 'BUBBLE-LV', name: 'Bubble Bath - Lavender', atRisk: '11/6/2015', dropDead: '11/25/2015', threshold: 3000 }, { id: 285, sku: 'KONJAC', name: 'Konjac Sponge', atRisk: '11/18/2015', dropDead: '11/29/2015', threshold: 3000 }];
+
+            return this.$q(function (resolve, reject) {
+              _this.$timeout(function () {
+                resolve(products);
+              });
+            });
+          }
+        }, {
+          key: 'getAtRiskProductsForRange',
+          value: function getAtRiskProductsForRange(startDate, endDate) {}
+        }]);
+
+        return AtRiskService;
+      })();
+
+      _export('default', AtRiskService);
+    }
+  };
+});
+System.register("js/common/services/inventory/inventory_projection.service", [], function (_export) {
+  "use strict";
+
+  var InventoryProjectionService;
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  return {
+    setters: [],
+    execute: function () {
+      InventoryProjectionService = function InventoryProjectionService() {
+        _classCallCheck(this, InventoryProjectionService);
+      };
+
+      _export("default", InventoryProjectionService);
+    }
+  };
+});
+System.register("js/common/services/inventory/products.service", [], function (_export) {
+  "use strict";
+
+  var ProductsService;
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  return {
+    setters: [],
+    execute: function () {
+      ProductsService = function ProductsService() {
+        _classCallCheck(this, ProductsService);
+      };
+
+      _export("default", ProductsService);
+    }
+  };
+});
+System.register('js/common/services/inventory/supply_and_demand_history.service', [], function (_export) {
+  'use strict';
+
+  var SupplyAndDemandHistoryService;
+
+  var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+  return {
+    setters: [],
+    execute: function () {
+      SupplyAndDemandHistoryService = (function () {
+        function SupplyAndDemandHistoryService($q, $timeout) {
+          _classCallCheck(this, SupplyAndDemandHistoryService);
+
+          this.$q = $q;
+          this.$timeout = $timeout;
+
+          this.estimatedVariability = {
+            1: {
+              'bundle': 0.15,
+              'shop': 0.10,
+              'retail': 0.15
+            },
+            'else': {
+              'bundle': 0.10,
+              'shop': 0.10,
+              'retail': 0.10
+            }
+          };
+
+          this.estimatedDemandAverages = {
+            1: {
+              'bundle': { channel: 'ecom', source: 'bundle', qty: 1000, nature: 'demand' },
+              'shop': { channel: 'ecom', source: 'shop', qty: 300, nature: 'demand' },
+              'retail': { channel: 'retail', source: 'target', qty: 250, nature: 'demand' }
+            },
+            332: {
+              'bundle': { channel: 'ecom', source: 'bundle', qty: 500, nature: 'demand' },
+              'shop': { channel: 'ecom', source: 'shop', qty: 100, nature: 'demand' },
+              'retail': { channel: 'retail', source: 'target', qty: 50, nature: 'demand' }
+            },
+            288: {
+              'bundle': { channel: 'ecom', source: 'bundle', qty: 750, nature: 'demand' },
+              'shop': { channel: 'ecom', source: 'shop', qty: 150, nature: 'demand' },
+              'retail': { channel: 'retail', source: 'target', qty: 300, nature: 'demand' }
+            },
+            328: {
+              'bundle': { channel: 'ecom', source: 'bundle', qty: 400, nature: 'demand' },
+              'shop': { channel: 'ecom', source: 'shop', qty: 100, nature: 'demand' },
+              'retail': { channel: 'retail', source: 'target', qty: 150, nature: 'demand' }
+            },
+            203: {
+              'bundle': { channel: 'ecom', source: 'bundle', qty: 300, nature: 'demand' },
+              'shop': { channel: 'ecom', source: 'shop', qty: 75, nature: 'demand' },
+              'retail': { channel: 'retail', source: 'target', qty: 10, nature: 'demand' }
+            },
+            246: {
+              'bundle': { channel: 'ecom', source: 'bundle', qty: 900, nature: 'demand' },
+              'shop': { channel: 'ecom', source: 'shop', qty: 100, nature: 'demand' },
+              'retail': { channel: 'retail', source: 'target', qty: 350, nature: 'demand' }
+            },
+            290: {
+              'bundle': { channel: 'ecom', source: 'bundle', qty: 500, nature: 'demand' },
+              'shop': { channel: 'ecom', source: 'shop', qty: 100, nature: 'demand' },
+              'retail': { channel: 'retail', source: 'target', qty: 400, nature: 'demand' }
+            },
+            334: {
+              'bundle': { channel: 'ecom', source: 'bundle', qty: 800, nature: 'demand' },
+              'shop': { channel: 'ecom', source: 'shop', qty: 250, nature: 'demand' },
+              'retail': { channel: 'retail', source: 'target', qty: 150, nature: 'demand' }
+            },
+            285: {
+              'bundle': { channel: 'ecom', source: 'bundle', qty: 125, nature: 'demand' },
+              'shop': { channel: 'ecom', source: 'shop', qty: 300, nature: 'demand' },
+              'retail': { channel: 'retail', source: 'target', qty: 200, nature: 'demand' }
+            }
+          };
+        }
+
+        _createClass(SupplyAndDemandHistoryService, [{
+          key: 'getHistoricalDemandVariabilityWithSource',
+          value: function getHistoricalDemandVariabilityWithSource(product) {
+            if (this.estimatedVariability[product.id]) {
+              return this.estimatedVariability[product.id];
+            } else {
+              return this.estimatedVariability['else'];
+            }
+          }
+        }, {
+          key: 'getHistoricalDemandVariability',
+          value: function getHistoricalDemandVariability(product) {
+            if (this.estimatedVariability[product.id]) {
+              return this.estimatedVariability[product.id]['bundle'];
+            } else {
+              return this.estimatedVariability['else']['bundle'];
+            }
+          }
+        }, {
+          key: 'getHistoricalDemandAverageForProductWithSource',
+          value: function getHistoricalDemandAverageForProductWithSource(product) {
+            return this.estimatedDemandAverages[product.id];
+          }
+        }, {
+          key: 'getHistoricalDemandAverageForProduct',
+          value: function getHistoricalDemandAverageForProduct(product) {
+            return this.estimatedDemandAverages[product.id]['bundle']['qty'];
+          }
+        }, {
+          key: 'varyDemand',
+          value: function varyDemand(variability, demand) {
+            var adjustment = Math.random() * variability;
+            var positive = Math.random() < .5;
+            var modifier = demand * adjustment;
+
+            var result = positive ? demand + modifier : demand - modifier;
+
+            return Math.round(result);
+          }
+        }, {
+          key: 'synthesizeHistory',
+          value: function synthesizeHistory(dateRange, demandVariability, averageDemand) {
+            var _this = this;
+
+            var history = [];
+
+            dateRange.by('days', function (day) {
+              _.each(averageDemand, function (data, source) {
+                history.push({ day: day, source: source, demand: _this.varyDemand(demandVariability, data.qty) });
+              });
+            });
+
+            return history;
+          }
+        }, {
+          key: 'getHistoryForProduct',
+          value: function getHistoryForProduct(startDate, endDate, product) {
+            var _this2 = this;
+
+            var averageDemand = this.getHistoricalDemandAverageForProductWithSource(product);
+            var demandVariability = this.getHistoricalDemandVariability(product);
+
+            var dateRange = moment.range(moment(startDate), moment(endDate));
+
+            var history = this.synthesizeHistory(dateRange, demandVariability, averageDemand);
+
+            return this.$q(function (resolve, reject) {
+              _this2.$timeout(function () {
+                resolve(history);
+              });
+            });
+          }
+        }]);
+
+        return SupplyAndDemandHistoryService;
+      })();
+
+      _export('default', SupplyAndDemandHistoryService);
+    }
+  };
+});
 System.register("js/common/components/inventory/at_risk_navigator.controller", [], function (_export) {
   "use strict";
 
@@ -582,14 +825,14 @@ System.register('js/common/components/inventory/product_projection.directive', [
     }
   };
 });
-System.register('js/common/components/inventory/product_projection_chart.controller', [], function (_export) {
-  'use strict';
+System.register("js/common/components/inventory/product_projection_chart.controller", [], function (_export) {
+  "use strict";
 
   var ProductProjectionChartController;
 
-  var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+  var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
   return {
     setters: [],
@@ -605,7 +848,7 @@ System.register('js/common/components/inventory/product_projection_chart.control
         }
 
         _createClass(ProductProjectionChartController, [{
-          key: 'watchChartDataUpdates',
+          key: "watchChartDataUpdates",
           value: function watchChartDataUpdates() {
             var _this = this;
 
@@ -617,8 +860,33 @@ System.register('js/common/components/inventory/product_projection_chart.control
             });
           }
         }, {
-          key: 'synthesizeInventorySeries',
-          value: function synthesizeInventorySeries(history) {
+          key: "synthesizeFlagSeries",
+          value: function synthesizeFlagSeries(history) {
+            var dayCounts = this.calculateTotalDemandByDay(history);
+
+            var data = [];
+
+            _.find(dayCounts, function (c) {
+              if (c[1] <= 0) {
+                data.push({ x: c[0], title: "Out of stock" });
+                console.warn("found OOS");
+                return true;
+              }
+              return false;
+            });
+
+            return {
+              id: 'inventory-warnings',
+              name: 'inventory warnings',
+              type: 'flags',
+              shape: 'squarepin',
+              onSeries: 'inventory',
+              data: data
+            };
+          }
+        }, {
+          key: "calculateTotalDemandByDay",
+          value: function calculateTotalDemandByDay(history) {
             var startingCount = 55000;
 
             var days = _.groupBy(history, function (h) {
@@ -633,13 +901,17 @@ System.register('js/common/components/inventory/product_projection_chart.control
               return [moment(key).utc().valueOf(), startingCount -= count];
             });
 
+            return dayCounts;
+          }
+        }, {
+          key: "synthesizeInventorySeries",
+          value: function synthesizeInventorySeries(history) {
+
+            var dayCounts = this.calculateTotalDemandByDay(history);
+
             var daySeries = _.sortBy(dayCounts, function (c) {
               return c[0];
             });
-
-            console.warn('day counts', daySeries);
-            console.warn('history', history);
-            console.warn('days', days);
 
             return {
               name: 'inventory',
@@ -661,7 +933,7 @@ System.register('js/common/components/inventory/product_projection_chart.control
             };
           }
         }, {
-          key: 'updateChartSeriesData',
+          key: "updateChartSeriesData",
           value: function updateChartSeriesData(history) {
             var _this2 = this;
 
@@ -678,6 +950,7 @@ System.register('js/common/components/inventory/product_projection_chart.control
             });
 
             newSeries.push(this.synthesizeInventorySeries(history));
+            //newSeries.push( this.synthesizeFlagSeries(history) );
 
             _.each(newSeries, function (s, index) {
               s.color = Highcharts.Color('#CCCCCC').brighten((index - 4) / 10).get();
@@ -686,14 +959,14 @@ System.register('js/common/components/inventory/product_projection_chart.control
             this.chartConfig.series = newSeries;
           }
         }, {
-          key: 'convertHistoryToSeriesData',
+          key: "convertHistoryToSeriesData",
           value: function convertHistoryToSeriesData(history) {
             return history.map(function (h) {
               return [h.day.utc().valueOf(), h.demand];
             });
           }
         }, {
-          key: 'produceChartConfig',
+          key: "produceChartConfig",
           value: function produceChartConfig() {
             return {
               options: {
@@ -738,7 +1011,46 @@ System.register('js/common/components/inventory/product_projection_chart.control
         return ProductProjectionChartController;
       })();
 
-      _export('default', ProductProjectionChartController);
+      _export("default", ProductProjectionChartController);
+    }
+  };
+});
+System.register('js/common/components/inventory/product_projection_chart.directive', [], function (_export) {
+  'use strict';
+
+  var ProductProjectionChartDirective;
+
+  var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+  return {
+    setters: [],
+    execute: function () {
+      ProductProjectionChartDirective = (function () {
+        function ProductProjectionChartDirective() {
+          _classCallCheck(this, ProductProjectionChartDirective);
+
+          this.scope = {};
+          this.controller = 'ProductProjectionChartController';
+          this.controllerAs = 'vm';
+          this.template = '<highchart config="vm.chartConfig"></highchart>';
+          this.bindToController = {
+            history: '='
+          };
+        }
+
+        _createClass(ProductProjectionChartDirective, null, [{
+          key: 'builder',
+          value: function builder() {
+            return new ProductProjectionChartDirective();
+          }
+        }]);
+
+        return ProductProjectionChartDirective;
+      })();
+
+      _export('default', ProductProjectionChartDirective);
     }
   };
 });
@@ -801,288 +1113,6 @@ System.register('js/common/components/inventory/product_projection_list.directiv
       })();
 
       _export('default', ProductProjectionListDirective);
-    }
-  };
-});
-System.register('js/common/services/inventory/atrisk.service', [], function (_export) {
-  'use strict';
-
-  var AtRiskService;
-
-  var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-  return {
-    setters: [],
-    execute: function () {
-      AtRiskService = (function () {
-        function AtRiskService($q, $timeout, ProductsService, InventoryProjectionService) {
-          _classCallCheck(this, AtRiskService);
-
-          this.$q = $q;
-          this.$timeout = $timeout;
-        }
-
-        _createClass(AtRiskService, [{
-          key: 'getAtRiskProducts',
-          value: function getAtRiskProducts() {
-            var _this = this;
-
-            var products = [{ id: 1, sku: 'DIAPERS', name: 'Diapers', atRisk: '10/21/2015', dropDead: '10/31/2015', threshold: 10000 }, { id: 332, sku: 'LOTION-AP', name: 'Lotion - Apricot', atRisk: '10/25/2015', dropDead: '11/2/2015', threshold: 5000 }, { id: 288, sku: 'EYE-CREAM', name: 'Eye Cream', atRisk: '10/24/2015', dropDead: '11/2/2015', threshold: 3000 }, { id: 328, sku: 'CONDITIONER-AP', name: 'Conditioner - Apricot', atRisk: '10/28/2015', dropDead: '11/3/2015', threshold: 2000 }, { id: 203, sku: 'DHA', name: 'Baby DHA', atRisk: '11/2/2015', dropDead: '11/8/2015', threshold: 5000 }, { id: 246, sku: 'TOOTHBRUSH', name: 'Adult Toothbrush', atRisk: '11/10/2015', dropDead: '11/20/2015', threshold: 5000 }, { id: 290, sku: 'REFRESH', name: 'Refresh Clean Gel', atRisk: '11/1/2015', dropDead: '11/22/2015', threshold: 3000 }, { id: 334, sku: 'BUBBLE-LV', name: 'Bubble Bath - Lavender', atRisk: '11/6/2015', dropDead: '11/25/2015', threshold: 3000 }, { id: 285, sku: 'KONJAC', name: 'Konjac Sponge', atRisk: '11/18/2015', dropDead: '11/29/2015', threshold: 3000 }];
-
-            return this.$q(function (resolve, reject) {
-              _this.$timeout(function () {
-                resolve(products);
-              });
-            });
-          }
-        }, {
-          key: 'getAtRiskProductsForRange',
-          value: function getAtRiskProductsForRange(startDate, endDate) {}
-        }]);
-
-        return AtRiskService;
-      })();
-
-      _export('default', AtRiskService);
-    }
-  };
-});
-System.register("js/common/services/inventory/inventory_projection.service", [], function (_export) {
-  "use strict";
-
-  var InventoryProjectionService;
-
-  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-  return {
-    setters: [],
-    execute: function () {
-      InventoryProjectionService = function InventoryProjectionService() {
-        _classCallCheck(this, InventoryProjectionService);
-      };
-
-      _export("default", InventoryProjectionService);
-    }
-  };
-});
-System.register("js/common/services/inventory/products.service", [], function (_export) {
-  "use strict";
-
-  var ProductsService;
-
-  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-  return {
-    setters: [],
-    execute: function () {
-      ProductsService = function ProductsService() {
-        _classCallCheck(this, ProductsService);
-      };
-
-      _export("default", ProductsService);
-    }
-  };
-});
-System.register('js/common/services/inventory/supply_and_demand_history.service', [], function (_export) {
-  'use strict';
-
-  var SupplyAndDemandHistoryService;
-
-  var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-  return {
-    setters: [],
-    execute: function () {
-      SupplyAndDemandHistoryService = (function () {
-        function SupplyAndDemandHistoryService($q, $timeout) {
-          _classCallCheck(this, SupplyAndDemandHistoryService);
-
-          this.$q = $q;
-          this.$timeout = $timeout;
-
-          this.estimatedVariability = {
-            1: {
-              'bundle': 0.15,
-              'shop': 0.10,
-              'retail': 0.15
-            },
-            'else': {
-              'bundle': 0.10,
-              'shop': 0.10,
-              'retail': 0.10
-            }
-          };
-
-          this.estimatedDemandAverages = {
-            1: {
-              'bundle': { channel: 'ecom', source: 'bundle', qty: 1000, nature: 'demand' },
-              'shop': { channel: 'ecom', source: 'shop', qty: 300, nature: 'demand' },
-              'retail': { channel: 'retail', source: 'target', qty: 250, nature: 'demand' }
-            },
-            332: {
-              'bundle': { channel: 'ecom', source: 'bundle', qty: 500, nature: 'demand' },
-              'shop': { channel: 'ecom', source: 'shop', qty: 100, nature: 'demand' },
-              'retail': { channel: 'retail', source: 'target', qty: 50, nature: 'demand' }
-            },
-            288: {
-              'bundle': { channel: 'ecom', source: 'bundle', qty: 750, nature: 'demand' },
-              'shop': { channel: 'ecom', source: 'shop', qty: 150, nature: 'demand' },
-              'retail': { channel: 'retail', source: 'target', qty: 300, nature: 'demand' }
-            },
-            328: {
-              'bundle': { channel: 'ecom', source: 'bundle', qty: 400, nature: 'demand' },
-              'shop': { channel: 'ecom', source: 'shop', qty: 100, nature: 'demand' },
-              'retail': { channel: 'retail', source: 'target', qty: 150, nature: 'demand' }
-            },
-            203: {
-              'bundle': { channel: 'ecom', source: 'bundle', qty: 300, nature: 'demand' },
-              'shop': { channel: 'ecom', source: 'shop', qty: 75, nature: 'demand' },
-              'retail': { channel: 'retail', source: 'target', qty: 10, nature: 'demand' }
-            },
-            246: {
-              'bundle': { channel: 'ecom', source: 'bundle', qty: 900, nature: 'demand' },
-              'shop': { channel: 'ecom', source: 'shop', qty: 100, nature: 'demand' },
-              'retail': { channel: 'retail', source: 'target', qty: 350, nature: 'demand' }
-            },
-            290: {
-              'bundle': { channel: 'ecom', source: 'bundle', qty: 500, nature: 'demand' },
-              'shop': { channel: 'ecom', source: 'shop', qty: 100, nature: 'demand' },
-              'retail': { channel: 'retail', source: 'target', qty: 400, nature: 'demand' }
-            },
-            334: {
-              'bundle': { channel: 'ecom', source: 'bundle', qty: 800, nature: 'demand' },
-              'shop': { channel: 'ecom', source: 'shop', qty: 250, nature: 'demand' },
-              'retail': { channel: 'retail', source: 'target', qty: 150, nature: 'demand' }
-            },
-            285: {
-              'bundle': { channel: 'ecom', source: 'bundle', qty: 125, nature: 'demand' },
-              'shop': { channel: 'ecom', source: 'shop', qty: 300, nature: 'demand' },
-              'retail': { channel: 'retail', source: 'target', qty: 200, nature: 'demand' }
-            }
-          };
-        }
-
-        _createClass(SupplyAndDemandHistoryService, [{
-          key: 'getHistoricalDemandVariabilityWithSource',
-          value: function getHistoricalDemandVariabilityWithSource(product) {
-            if (this.estimatedVariability[product.id]) {
-              return this.estimatedVariability[product.id];
-            } else {
-              return this.estimatedVariability['else'];
-            }
-          }
-        }, {
-          key: 'getHistoricalDemandVariability',
-          value: function getHistoricalDemandVariability(product) {
-            if (this.estimatedVariability[product.id]) {
-              return this.estimatedVariability[product.id]['bundle'];
-            } else {
-              return this.estimatedVariability['else']['bundle'];
-            }
-          }
-        }, {
-          key: 'getHistoricalDemandAverageForProductWithSource',
-          value: function getHistoricalDemandAverageForProductWithSource(product) {
-            return this.estimatedDemandAverages[product.id];
-          }
-        }, {
-          key: 'getHistoricalDemandAverageForProduct',
-          value: function getHistoricalDemandAverageForProduct(product) {
-            return this.estimatedDemandAverages[product.id]['bundle']['qty'];
-          }
-        }, {
-          key: 'varyDemand',
-          value: function varyDemand(variability, demand) {
-            var adjustment = Math.random() * variability;
-            var positive = Math.random() < .5;
-            var modifier = demand * adjustment;
-
-            var result = positive ? demand + modifier : demand - modifier;
-
-            return Math.round(result);
-          }
-        }, {
-          key: 'synthesizeHistory',
-          value: function synthesizeHistory(dateRange, demandVariability, averageDemand) {
-            var _this = this;
-
-            var history = [];
-
-            dateRange.by('days', function (day) {
-              _.each(averageDemand, function (data, source) {
-                history.push({ day: day, source: source, demand: _this.varyDemand(demandVariability, data.qty) });
-              });
-            });
-
-            return history;
-          }
-        }, {
-          key: 'getHistoryForProduct',
-          value: function getHistoryForProduct(startDate, endDate, product) {
-            var _this2 = this;
-
-            var averageDemand = this.getHistoricalDemandAverageForProductWithSource(product);
-            var demandVariability = this.getHistoricalDemandVariability(product);
-
-            var dateRange = moment.range(moment(startDate), moment(endDate));
-
-            var history = this.synthesizeHistory(dateRange, demandVariability, averageDemand);
-
-            return this.$q(function (resolve, reject) {
-              _this2.$timeout(function () {
-                resolve(history);
-              });
-            });
-          }
-        }]);
-
-        return SupplyAndDemandHistoryService;
-      })();
-
-      _export('default', SupplyAndDemandHistoryService);
-    }
-  };
-});
-System.register('js/common/components/inventory/product_projection_chart.directive', [], function (_export) {
-  'use strict';
-
-  var ProductProjectionChartDirective;
-
-  var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-  return {
-    setters: [],
-    execute: function () {
-      ProductProjectionChartDirective = (function () {
-        function ProductProjectionChartDirective() {
-          _classCallCheck(this, ProductProjectionChartDirective);
-
-          this.scope = {};
-          this.controller = 'ProductProjectionChartController';
-          this.controllerAs = 'vm';
-          this.template = '<highchart config="vm.chartConfig"></highchart>';
-          this.bindToController = {
-            history: '='
-          };
-        }
-
-        _createClass(ProductProjectionChartDirective, null, [{
-          key: 'builder',
-          value: function builder() {
-            return new ProductProjectionChartDirective();
-          }
-        }]);
-
-        return ProductProjectionChartDirective;
-      })();
-
-      _export('default', ProductProjectionChartDirective);
     }
   };
 });
