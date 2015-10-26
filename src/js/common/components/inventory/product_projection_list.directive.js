@@ -10,8 +10,6 @@ class ProductProjectionListDirective {
   }
 
   link(scope,element,attrs,controllers) {
-    console.warn("controllers:",controllers);
-  }
   static builder() {
     return new ProductProjectionListDirective();
   }

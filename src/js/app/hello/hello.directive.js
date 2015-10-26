@@ -11,7 +11,6 @@ class HelloDirective {
   }
 
   static builder() {
-    console.warn("building HD");
     return new HelloDirective();
   }
 }

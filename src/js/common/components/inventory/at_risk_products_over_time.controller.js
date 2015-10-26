@@ -4,11 +4,17 @@ class AtRiskProductsOverTimeController {
     this.$log   = $log;
     this.$scope = $scope;
 
+    this.atRiskService = AtRiskService;
+
     this.chartConfig = this.produceChartConfig();
 
-    let atRiskProductsLoaded = AtRiskService.getAtRiskProducts();
+    this.loadAtRiskProducts();
+  }
 
-    atRiskProductsLoaded.then(products => this.processAtRiskProducts(products));
+  loadAtRiskProducts() {
+    let atRiskProductsLoaded = this.atRiskService.getAtRiskProducts();
+
+    return atRiskProductsLoaded.then(products => this.processAtRiskProducts(products));
   }
 
   processAtRiskProducts( atRiskProducts ) {
@@ -39,34 +45,7 @@ class AtRiskProductsOverTimeController {
   }
 
   produceRiskRangeByDay( atRiskProducts, range ) {
-    var riskRange = [];
-
-    range.by('days', (day) => {
-      var atRiskByDay = _.reduce(atRiskProducts, (result,product) => {
-        let atRiskDate = moment(product.atRisk, "M/D/YYYY");
-
-        if( ! result.has(day) ) {
-          result.set(day, { when: day, atRisk: 0, notAtRisk: 0, atRiskProducts: [] } );
-        }
-
-        var dayData = result.get(day);
-
-        if( atRiskDate.isBefore(day) || atRiskDate.isSame(day) ) {
-          dayData.atRisk++;
-          dayData.atRiskProducts.push(product);
-        } else {
-          dayData.notAtRisk++;
-        }
-        return result;
-      }, new Map());
-
-      riskRange.push( atRiskByDay.get(day) );
-
-      return true;
-    });
-
-
-    return riskRange;
+    return this.atRiskService.produceRiskRangeByDay( atRiskProducts, range );
   }
 
   handleAtRiskBarSelection(event, series) {

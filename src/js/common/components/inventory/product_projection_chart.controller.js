@@ -1,6 +1,8 @@
 class ProductProjectionChartController {
-  constructor($scope) {
+  constructor($scope, InventoryProjectionService) {
     this.$scope = $scope;
+    this.inventoryProjectionService = InventoryProjectionService;
+
     this.chartConfig = this.produceChartConfig();
 
     this.seriesIndexes = {
@@ -12,15 +14,12 @@ class ProductProjectionChartController {
   }
 
   watchChartDataUpdates() {
-    this.$scope.$watch( () => { return this.history }, (newVal) => {
-      console.warn("updating chart");
+    this.$scope.$watch( () => (this.history), (newVal) => {
       this.updateChartSeriesData(this.history);
     })
   }
 
-  synthesizeFlagSeries(history) {
-    let dayCounts = this.calculateTotalDemandByDay(history);
-
+  collectWarnings( dayCounts ) {
     var data = [];
 
     _.find( dayCounts, (c) => {
@@ -31,6 +30,13 @@ class ProductProjectionChartController {
       }
       return false;
     });
+
+    return data;
+  }
+  synthesizeFlagSeries(history) {
+    let dayCounts = this.calculateTotalDemandByDay(history);
+
+    var data = this.collectWarnings( dayCounts );
 
     return {
       zIndex: this.seriesIndexes.inventoryWarnings,
@@ -44,27 +50,11 @@ class ProductProjectionChartController {
   }
 
   calculateTotalDemandByDay(history) {
-    let startingCount = 55000;
-
-    let days = _.groupBy(history, (h) => {
-      return h.day;
-    });
-
-    let dayCounts = _.map(days, (dayData,key) => {
-      let count = _.reduce(dayData, (result,dataPoint) => {
-        return result += dataPoint.quantity;
-      },0);
-      console.warn("key:",key);
-      return [ moment(key).startOf('day').utc().valueOf(), startingCount -= count ];
-    });
-
-    return dayCounts;
+    return this.inventoryProjectionService.calculateTotalDemandByDay(history);
   }
 
   synthesizeInventorySeries(history) {
-
     let dayCounts = this.calculateTotalDemandByDay(history);
-
     let daySeries = _.sortBy( dayCounts, (c) => ( c[0] ) );
 
     return {

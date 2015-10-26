@@ -107,7 +107,6 @@ class SupplyAndDemandHistoryService {
 
     dateRange.by('days', (day) => {
       _.each( averageDemand, (data,source) => {
-        console.warn('day:',day.valueOf());
         history.push( { day: day, source: source, quantity: this.varyDemand(demandVariability,data.qty) } );
       });
     });

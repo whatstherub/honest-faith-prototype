@@ -3,8 +3,10 @@ class ProductProjectionController {
     this.$scope = $scope;
     this.supplyAndDemandHistoryService = SupplyAndDemandHistoryService;
 
-    this.populateHistory();
+    this.projectionStartDate = moment().subtract(30, 'days').startOf('day');
+    this.projectionEndDate   = moment().add(14, 'days').startOf('day');
 
+    this.populateHistory();
 
     this.listenForHistoricalDataUpdate();
   }
@@ -17,8 +19,8 @@ class ProductProjectionController {
 
   requestHistory() {
     return this.supplyAndDemandHistoryService.getHistoryForProduct(
-      moment().subtract(30, 'days').startOf('day'),
-      moment().add(14, 'days').startOf('day'),
+      this.projectionStartDate,
+      this.projectionEndDate,
       this.product
     )
   }

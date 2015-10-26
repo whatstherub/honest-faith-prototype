@@ -1,7 +1,7 @@
 class InventoryProjectionTweaksController {
-  constructor($rootScope,$scope,AtRiskService,SupplyAndDemandHistoryService) {
-    this.$rootScope = $rootScope;
+  constructor($scope,$rootScope,AtRiskService,SupplyAndDemandHistoryService) {
     this.$scope = $scope;
+    this.$rootScope = $rootScope;
 
     this.atRiskService = AtRiskService;
     this.supplyAndDemandHistoryService = SupplyAndDemandHistoryService;

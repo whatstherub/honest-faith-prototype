@@ -8,7 +8,6 @@ class AtRiskNavigatorController {
   }
 
   updateSelectedProducts(products) {
-    console.warn("vm updating products");
     this.atRiskProducts.length = 0;
 
     _.each(products, (p) => {

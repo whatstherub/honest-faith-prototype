@@ -24,6 +24,37 @@ class AtRiskService {
     });
   }
 
+  produceRiskRangeByDay( atRiskProducts, range ) {
+    var riskRange = [];
+
+    range.by('days', (day) => {
+      var atRiskByDay = _.reduce(atRiskProducts, (result,product) => {
+        let atRiskDate = moment(product.atRisk, "M/D/YYYY");
+
+        if( ! result.has(day) ) {
+          result.set(day, { when: day, atRisk: 0, notAtRisk: 0, atRiskProducts: [] } );
+        }
+
+        var dayData = result.get(day);
+
+        if( atRiskDate.isBefore(day) || atRiskDate.isSame(day) ) {
+          dayData.atRisk++;
+          dayData.atRiskProducts.push(product);
+        } else {
+          dayData.notAtRisk++;
+        }
+        return result;
+      }, new Map());
+
+      riskRange.push( atRiskByDay.get(day) );
+
+      return true;
+    });
+
+
+    return riskRange;
+  }
+  
   getAtRiskProductsForRange(startDate, endDate) {
 
   }
