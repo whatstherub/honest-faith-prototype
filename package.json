@@ -63,6 +63,7 @@
     "yargs": "^3.25.0"
   },
   "dependencies": {
-    "gulp-autoprefixer": "^3.1.0"
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-koa-service": "0.0.8"
   }
 }
