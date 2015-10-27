@@ -20,35 +20,11 @@ class ProductProjectionChartController {
     })
   }
 
-  collectWarnings( dayCounts ) {
-    var data = [];
-
-    _.find( dayCounts, (c) => {
-      if( c[1] <= 0 ) {
-        data.push({ x: c[0], title: "Out of stock"});
-        console.warn("found OOS");
-        return true;
-      }
-      return false;
-    });
-
-    return data;
-  }
-  
   synthesizeFlagSeries(history) {
-    let dayCounts = this.calculateTotalDemandByDay(history);
+    let opts = { zIndex: this.seriesIndexes.inventoryWarnings };
 
-    var data = this.collectWarnings( dayCounts );
-
-    return {
-      zIndex: this.seriesIndexes.inventoryWarnings,
-      id: 'inventory-warnings',
-      name: 'inventory warnings',
-      type: 'flags',
-      shape: 'squarepin',
-      onSeries: 'inventory',
-      data: data
-    }
+    return this.productInventoryChartService
+      .synthesizeFlagSeries(history, opts);
   }
 
   calculateTotalDemandByDay(history) {
@@ -56,11 +32,10 @@ class ProductProjectionChartController {
   }
 
   synthesizeInventorySeries(history) {
-    let series = this.productInventoryChartService.synthesizeInventorySeries(history);
+    let opts = { zIndex: this.seriesIndexes.inventory };
 
-    series.zIndex = this.seriesIndexes.inventory;
-
-    return series;
+    return this.productInventoryChartService
+      .synthesizeInventorySeries(history, opts);
   }
 
   updateChartSeriesData( history ) {
@@ -93,43 +68,7 @@ class ProductProjectionChartController {
   }
 
   produceChartConfig() {
-    return {
-      options: {
-        chart: {
-          height: 200
-        },
-        exporting: {
-          enabled: false
-        },
-        tooltip: {
-          shared: true
-        },
-        plotOptions: {
-          area: {
-            stacking: 'normal'
-          }
-        },
-      },
-      xAxis: [{
-        type: 'datetime',
-        reversed: false
-      }],
-      yAxis:[{
-        title: {
-          text: 'demand'
-        }
-      },{
-        title: {
-          text: 'inventory'
-        },
-        opposite: true,
-        min: -5000
-
-      }],
-      title: {
-        text: null
-      }
-    };
+    return this.productInventoryChartService.produceChartConfig();
   }
 }
 
