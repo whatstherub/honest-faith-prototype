@@ -1,10 +1,14 @@
 class AtRiskNavigatorController {
-  constructor($scope,$aside) {
+  constructor($scope,$aside,AtRiskService) {
     this.$scope = $scope;
     this.$aside = $aside;
+    
+    this.atRiskService = AtRiskService;
 
     this.tweaksDisplayed = false;
     this.atRiskProducts = [];
+    
+    this.loadAtRiskProducts();
   }
 
   updateSelectedProducts(products) {
@@ -20,6 +24,16 @@ class AtRiskNavigatorController {
 
   }
 
+  loadAtRiskProducts() {
+    let atRiskProductsLoaded = this.atRiskService.getAtRiskProducts();
+
+    return atRiskProductsLoaded.then(products => this.processAtRiskProducts(products));
+  }
+  
+  processAtRiskProducts( products ) {
+    this.products = products;
+  }
+  
   expandTweaks() {
     let tweaks = this.$aside({
       title: 'Tweaks',

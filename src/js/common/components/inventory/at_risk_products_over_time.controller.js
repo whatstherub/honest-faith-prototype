@@ -7,14 +7,16 @@ class AtRiskProductsOverTimeController {
     this.atRiskService = AtRiskService;
 
     this.chartConfig = this.produceChartConfig();
-
-    this.loadAtRiskProducts();
+    
+    this.watchForProductUpdates();
   }
-
-  loadAtRiskProducts() {
-    let atRiskProductsLoaded = this.atRiskService.getAtRiskProducts();
-
-    return atRiskProductsLoaded.then(products => this.processAtRiskProducts(products));
+  
+  watchForProductUpdates() {
+    this.$scope.$watch( () => (this.products), (newProducts) => {
+      if( newProducts ) {
+        this.processAtRiskProducts( newProducts ); 
+      }
+    });
   }
 
   processAtRiskProducts( atRiskProducts ) {

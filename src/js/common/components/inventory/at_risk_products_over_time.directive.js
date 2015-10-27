@@ -7,6 +7,7 @@ class AtRiskProductsOverTimeDirective {
     this.controllerAs = 'vm';
     this.bindToController = {
       chartConfig: '=',
+      products: '=',
       handleProductsSelection: '&'
     }
   }

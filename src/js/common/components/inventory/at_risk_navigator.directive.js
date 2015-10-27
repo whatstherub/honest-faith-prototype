@@ -7,10 +7,6 @@ class AtRiskNavigatorDirective {
     this.template = `<ng-transclude></ng-transclude>`;
   }
 
-  link(scope, element, attrs, controllers, transclude) {
-    
-  }
-
   static builder() {
     return new AtRiskNavigatorDirective();
   }

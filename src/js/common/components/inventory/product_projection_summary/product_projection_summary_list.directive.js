@@ -9,7 +9,6 @@ class ProductProjectionSummaryListDirective {
     }
   }
 
-  link(scope,element,attrs,controllers) {
   static builder() {
     return new ProductProjectionSummaryListDirective();
   }
