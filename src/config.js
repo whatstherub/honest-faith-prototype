@@ -9,14 +9,14 @@ System.config({
 
     "common.components.inventory": "js/common/components/inventory/inventory.module",
     "common.components.inventory.product_projection_summary": "js/common/components/inventory/product_projection_summary/product_projection_summary.module",
-   
+
    "common.components.inventory.product_projection_summary.product_projection_summary.directive": "js/common/components/inventory/product_projection_summary/product_projection_summary.directive",
    "common.components.inventory.product_projection_summary.product_projection_summary.controller": "js/common/components/inventory/product_projection_summary/product_projection_summary.controller",
-   
+
    "common.components.inventory.product_projection_summary.product_projection_summary_list.directive": "js/common/components/inventory/product_projection_summary/product_projection_summary_list.directive",
    "common.components.inventory.product_projection_summary.product_projection_summary_list.controller": "js/common/components/inventory/product_projection_summary/product_projection_summary_list.controller",
-   
-   
+
+
     "common.components.inventory.at_risk_products_over_time.controller": "js/common/components/inventory/at_risk_products_over_time.controller",
     "common.components.inventory.at_risk_products_over_time.directive": "js/common/components/inventory/at_risk_products_over_time.directive",
 
@@ -25,7 +25,8 @@ System.config({
     "common.services.inventory.inventory_projection.service": "js/common/services/inventory/inventory_projection.service",
     "common.services.inventory.supply_and_demand_history.service": "js/common/services/inventory/supply_and_demand_history.service",
     "common.services.inventory.inventory_details.service": "js/common/services/inventory/inventory_details.service",
-
+    "common.services.inventory.charting.product_inventory_chart.service": "js/common/services/inventory/charting/product_inventory_chart.service",
+    
     "common.components.inventory.product_projection.controller": "js/common/components/inventory/product_projection.controller",
     "common.components.inventory.product_projection.directive": "js/common/components/inventory/product_projection.directive",
 

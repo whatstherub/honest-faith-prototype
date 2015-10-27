@@ -1,7 +1,8 @@
 class ProductProjectionChartController {
-  constructor($scope, InventoryProjectionService) {
+  constructor($scope, InventoryProjectionService, ProductInventoryChartService) {
     this.$scope = $scope;
     this.inventoryProjectionService = InventoryProjectionService;
+    this.productInventoryChartService = ProductInventoryChartService;
 
     this.chartConfig = this.produceChartConfig();
 
@@ -33,6 +34,7 @@ class ProductProjectionChartController {
 
     return data;
   }
+  
   synthesizeFlagSeries(history) {
     let dayCounts = this.calculateTotalDemandByDay(history);
 
@@ -54,29 +56,11 @@ class ProductProjectionChartController {
   }
 
   synthesizeInventorySeries(history) {
-    let dayCounts = this.calculateTotalDemandByDay(history);
-    let daySeries = _.sortBy( dayCounts, (c) => ( c[0] ) );
+    let series = this.productInventoryChartService.synthesizeInventorySeries(history);
 
-    return {
-      id: 'inventory',
-      zIndex: this.seriesIndexes.inventory,
-      name: 'inventory',
-      type: 'line',
-      yAxis: 1,
-      lineWidth: 2,
-      lineColor: '#000000',
-      marker: {
-        enabled: false
-      },
-      zones: [{
-        value: 0,
-        color: '#FF0000'
-      }, {
-        color: '#CCCCCC',
-        lineWidth: 5
-      }],
-      data: daySeries
-    }
+    series.zIndex = this.seriesIndexes.inventory;
+
+    return series;
   }
 
   updateChartSeriesData( history ) {

@@ -6,6 +6,7 @@ import InventoryProjectionService from 'common.services.inventory.inventory_proj
 import ProductsService from 'common.services.inventory.products.service';
 import SupplyAndDemandHistoryService from 'common.services.inventory.supply_and_demand_history.service';
 import InventoryDetailsService from 'common.services.inventory.inventory_details.service';
+import ProductInventoryChartService from 'common.services.inventory.charting.product_inventory_chart.service';
 
 import ProductProjectionController from 'common.components.inventory.product_projection.controller';
 import ProductProjectionDirective  from 'common.components.inventory.product_projection.directive';
@@ -34,7 +35,8 @@ angular.module(moduleName, ['ngAnimate','mgcrea.ngStrap', 'ui.select'])
   .service('AtRiskService', AtRiskService)
   .service('SupplyAndDemandHistoryService', SupplyAndDemandHistoryService)
   .service('InventoryDetailsService', InventoryDetailsService)
-
+  .service('ProductInventoryChartService', ProductInventoryChartService)
+  
   .controller('ProductProjectionController', ProductProjectionController )
   .directive('productProjection', ProductProjectionDirective.builder)
 
