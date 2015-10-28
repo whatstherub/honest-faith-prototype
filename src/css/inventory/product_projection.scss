@@ -1,4 +1,4 @@
-$warning-color: #FF6666;
+@import 'product_projection_theme';
 
 .product-projection-summary-list {
 	display: flex;
@@ -29,7 +29,8 @@ $warning-color: #FF6666;
 
 				.details {
 					.fa {
-						padding-right: 10px;
+						padding-left: 4px;
+						padding-right: 24px;
 					}
 
 					width: 40%;
@@ -41,12 +42,12 @@ $warning-color: #FF6666;
 			}
 
 			&.status-critical {
-				background-color: red;
+				background-color: $critical-color;
 				color: white;
 
 
 				.details {
-					border: 1px solid white;
+					border: 1px solid $critical-contrast-color;
 					border-right: none;
 					background-color: black;
 				}
@@ -60,19 +61,19 @@ $warning-color: #FF6666;
 				.details {
 					border: 1px solid black;
 					border-right: none;
-					background-color: red;
-					color: white;
+					background-color: $critical-color;
+					color: $critical-contrast-color;
 				}
 			}
 			&.status-ok {
-				background-color: #CCCCCC;
+				background-color: $ok-color;
 				color: black;
 
 
 				.details {
 					border: 1px solid black;
 					border-right: none;
-					background-color: $warning-color;
+					background-color: $ok-accent-color;
 				}
 			}
 

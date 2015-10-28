@@ -5,7 +5,7 @@ class ProductProjectionChartDirective {
     this.controllerAs = 'vm';
     this.template     = `<highchart config="vm.chartConfig"></highchart>`;
     this.bindToController = {
-      product: '='
+      product: '=',
       history: '='
     }
   }
