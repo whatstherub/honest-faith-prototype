@@ -1,4 +1,4 @@
 div.product-projection-summary-list
   div ng-repeat="product in vm.products | orderBy:'product.dropDead'"
     div.product-projection-container
-      product-projection-summary product="product"
+      product-projection-summary product="product" handle-selection="vm.displayDetail(product)"

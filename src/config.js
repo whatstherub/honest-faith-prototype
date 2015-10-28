@@ -10,6 +10,10 @@ System.config({
 
     "common.components.inventory": "js/common/components/inventory/inventory.module",
     "common.components.inventory.product_projection_summary": "js/common/components/inventory/product_projection_summary/product_projection_summary.module",
+    "common.components.inventory.product_projection_detail": "js/common/components/inventory/product_projection_detail/product_projection_detail.module",
+
+    "common.components.inventory.product_projection_detail.product_projection_detail.directive": "js/common/components/inventory/product_projection_detail/product_projection_detail.directive",
+    "common.components.inventory.product_projection_detail.product_projection_detail.controller": "js/common/components/inventory/product_projection_detail/product_projection_detail.controller",
 
    "common.components.inventory.product_projection_summary.product_projection_summary.directive": "js/common/components/inventory/product_projection_summary/product_projection_summary.directive",
    "common.components.inventory.product_projection_summary.product_projection_summary.controller": "js/common/components/inventory/product_projection_summary/product_projection_summary.controller",
@@ -26,7 +30,7 @@ System.config({
     "common.services.inventory.supply_and_demand_history.service": "js/common/services/inventory/supply_and_demand_history.service",
     "common.services.inventory.inventory_details.service": "js/common/services/inventory/inventory_details.service",
     "common.services.inventory.charting.product_inventory_chart.service": "js/common/services/inventory/charting/product_inventory_chart.service",
-    
+
     "common.components.inventory.product_projection.controller": "js/common/components/inventory/product_projection.controller",
     "common.components.inventory.product_projection.directive": "js/common/components/inventory/product_projection.directive",
 

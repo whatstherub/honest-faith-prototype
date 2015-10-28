@@ -9,10 +9,8 @@ var moduleName = 'common.components.inventory.product_projection_summary';
 angular.module(moduleName, ['ngAnimate','mgcrea.ngStrap', 'ui.select'])
   .directive('productProjectionSummary', ProductProjectionSummaryDirective.builder)
   .controller('ProductProjectionSummaryController', ProductProjectionSummaryController)
-  
+
   .directive('productProjectionSummaryList', ProductProjectionSummaryListDirective.builder)
   .controller('ProductProjectionSummaryListController', ProductProjectionSummaryListController)
-  
-
 
 export default moduleName;

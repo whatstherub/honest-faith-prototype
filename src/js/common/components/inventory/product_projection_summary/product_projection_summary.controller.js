@@ -1,17 +1,22 @@
 /* global moment */
 class ProductProjectionSummaryController {
-	constructor(InventoryProjectionService) {
+	constructor($scope,InventoryProjectionService) {
 		this.inventoryProjectionService = InventoryProjectionService;
-		
+
 		this.riskClass = [];
 
 		this.riskThresholdDate = moment().add(14, 'days');
 		this.deadThresholdDate = moment().add(7, 'days');
-		
+
 		this.calculateProjections();
 		this.calculateRiskStatus();
 		this.calculateDisplayStates();
+	}
 
+	handleClick() {
+		this.handleSelection({
+			product: this.product
+		});
 	}
 
 	isAtRisk( atRiskDate ) {
@@ -39,16 +44,16 @@ class ProductProjectionSummaryController {
 	get productDropDeadMoment() {
 		return moment(this.productDropDead, "M/D/YYYY")
 	}
-	
+
 	calculateProjections() {
 		this.projections = this.inventoryProjectionService.calculateProjections(this.product);
-		
+
 		console.warn(this.projections);
-		
+
 		this.productAtRisk 		= this.product.atRisk;
 		this.productDropDead 	= this.product.dropDead;
 	}
-	
+
 	calculateRiskStatus() {
 		this.daysUntilOutOfStock = this.productDropDeadMoment.diff(moment(),'days');
 		this.daysUntilRisk       = this.productAtRiskMoment.diff(moment(), 'days' );

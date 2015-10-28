@@ -1,5 +1,5 @@
-div.product-projection-summary ng-class="vm.riskClass"
-  div.name {{vm.product.name}}
+div.product-projection-summary ng-class="vm.riskClass" ng-click="vm.handleClick()"
+  div.name  {{vm.product.name}}
   div.when-container
     div.when ng-switch="vm.riskStatus"
       div ng-switch-when="ok"

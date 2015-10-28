@@ -5,7 +5,8 @@ class ProductProjectionSummaryDirective {
     this.controller = 'ProductProjectionSummaryController';
     this.controllerAs = 'vm';
     this.bindToController = {
-      product: '='
+      product: '=',
+      handleSelection: '&'
     }
   }
 
