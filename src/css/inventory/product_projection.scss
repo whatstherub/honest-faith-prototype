@@ -1,36 +1,79 @@
+$warning-color: #FF6666;
 
 .product-projection-summary-list {
-
-	background-color: blue;
-	width: 90%;
-	margin-left: auto;
-	margin-right: auto;
-	display: block;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-between;
 
 	.product-projection-container {
-		float: left;
-		width: 250px;
-		min-height: 150px;
-		border: solid black 1px;
-		margin-left: 3px;
-		margin-bottom: 3px;
 
+		width: 250px;
+		border: solid black 1px;
+		margin-bottom: 20px;
 		cursor: pointer;
 
+
 		.product-projection-summary {
+			display: flex;
+			flex-flow: column;
+			align-content: center;
+			justify-content: space-between;
+
+			.when-container {
+				display: flex;
+				flex-flow: row;
+
+				.when {
+					width: 60%;
+				}
+
+				.details {
+					.fa {
+						padding-right: 10px;
+					}
+
+					width: 40%;
+					height: 50px;
+					margin-top: 10px;
+					padding: 5px;
+					//box-shadow: 1px 1px 3px 1px black;
+				}
+			}
+
 			&.status-critical {
 				background-color: red;
 				color: white;
+
+
+				.details {
+					border: 1px solid white;
+					border-right: none;
+					background-color: black;
+				}
 			}
 
 			&.status-warning {
-				background-color: orange;
-
+				background-color: $warning-color;
 				color: black;
+
+
+				.details {
+					border: 1px solid black;
+					border-right: none;
+					background-color: red;
+					color: white;
+				}
 			}
 			&.status-ok {
 				background-color: #CCCCCC;
 				color: black;
+
+
+				.details {
+					border: 1px solid black;
+					border-right: none;
+					background-color: $warning-color;
+				}
 			}
 
 			.name {

@@ -3,8 +3,9 @@ class ProductProjectionSummaryController {
 		this.riskClass = [];
 
 		this.riskThresholdDate = moment().add(14, 'days');
-		this.deadThresholdDate = moment().add(14, 'days');
+		this.deadThresholdDate = moment().add(7, 'days');
 
+		this.calculateRiskStatus();
 		this.calculateDisplayStates();
 	}
 
@@ -18,17 +19,48 @@ class ProductProjectionSummaryController {
 			|| atRiskDate.isSame(this.deadThresholdDate);
 	}
 
-	calculateDisplayStates() {
-		let atRiskDate = moment(this.product.atRisk, "M/D/YYYY"),
-			dropDeadDate = moment(this.product.dropDead, "M/D/YYYY");
+	calculateRiskStatus() {
+		this.daysUntilOutOfStock = this.productDropDeadMoment.diff(moment(),'days');
+		this.daysUntilRisk       = this.productAtRiskMoment.diff(moment(), 'days' );
 
-		if( this.isCritical(atRiskDate) ) {
-				this.riskClass.push('status-critical');
-		} else if( this.isAtRisk(atRiskDate) ) {
-			this.riskClass.push( 'status-warning' );
+		console.warn("OOS:", this.daysUntilOutOfStock);
+		console.warn("DUR:", this.daysUntilRisk);
+
+		if( this.isCritical(this.productAtRiskMoment) ) {
+			this.riskStatus = 'critical';
+		} else if( this.isAtRisk(this.productAtRiskMoment) ) {
+			this.riskStatus = 'warning';
 		} else {
-			this.riskClass.push( 'status-ok' );
+			this.riskStatus = 'ok';
 		}
+
+		return this.riskStatus;
+	}
+
+	get prettyAtRisk() {
+		return this.productAtRiskMoment.format("MMM Do");
+	}
+
+	get prettyDropDead() {
+		return this.productDropDeadMoment.format("MMM Do");
+	}
+
+	get productAtRiskMoment() {
+		return moment(this.product.atRisk, "M/D/YYYY");
+	}
+
+	get productDropDeadMoment() {
+		return moment(this.product.dropDead, "M/D/YYYY")
+	}
+
+	calculateDisplayStates() {
+		let status = 'status-' + this.calculateRiskStatus(
+			this.productAtRiskMoment,
+			this.productDropDeadMoment
+		);
+
+		this.riskClass.length = 0;
+		this.riskClass.push( status );
 	}
 }
 

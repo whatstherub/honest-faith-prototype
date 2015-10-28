@@ -1,4 +1,21 @@
 div.product-projection-summary ng-class="vm.riskClass"
   div.name {{vm.product.name}}
-  div.time 2
-  div.time-period days
+  div.when-container
+    div.when ng-switch="vm.riskStatus"
+      div ng-switch-when="ok"
+        div.time {{vm.daysUntilRisk}}
+        div.time-period days
+      div ng-switch-when="warning"
+        div.time {{ vm.daysUntilOutOfStock }}
+        div.time-period days
+      div ng-switch-when="critical"
+        div.time {{ vm.daysUntilOutOfStock }}
+        div.time-period days
+      
+    div.details
+      div.danger-at
+        i.fa.fa-fw.fa-warning
+        span {{ vm.prettyAtRisk }}
+      div.oos-at 
+        i.fa.fa-fw.fa-hourglass-end
+        span {{ vm.prettyDropDead }}
