@@ -30,7 +30,7 @@
 				.details {
 					.fa {
 						padding-left: 4px;
-						padding-right: 24px;
+						padding-right: 20px;
 					}
 
 					width: 40%;
@@ -59,7 +59,7 @@
 
 
 				.details {
-					border: 1px solid black;
+					border: 1px solid $warning-contrast-color;
 					border-right: none;
 					background-color: $critical-color;
 					color: $critical-contrast-color;
@@ -71,7 +71,7 @@
 
 
 				.details {
-					border: 1px solid black;
+					border: 1px solid $ok-contrast-color;
 					border-right: none;
 					background-color: $ok-accent-color;
 				}
