@@ -1,32 +1,58 @@
+/* global _ */
+/* global moment */
 class InventoryProjectionService {
-  constructor(InventoryDetailsService) {
+  constructor(InventoryDetailsService,SupplyAndDemandHistoryService) {
     this.inventoryDetailsService = InventoryDetailsService;
+    this.supplyAndDemandHistoryService = SupplyAndDemandHistoryService;
   }
+  
+  calculateProjections(product,history) {
+    let today = moment().utc().startOf('day');
+    
+    let startingCount = this.inventoryDetailsService
+      .getCurrentInventoryLevelForProductAt(product, today);
 
+    let demandAverages    = this.calculateAverageDemand(product,history),
+        demandVariability = this.calculateAverageDemandVariability(product,history);
+    
+    return {
+      asOf: today,
+      currentInventory: startingCount,
+      averageDemand: demandAverages,
+      demandVariability: demandVariability
+    };
+  }
+  
   calculateTotalDemandByDay(product,history) {
-    let today = moment().startOf('day');
-
+    let today = moment().utc().startOf('day');
+    
     let startingCount = this.inventoryDetailsService
       .getCurrentInventoryLevelForProductAt(product, today);
 
     console.warn("starting count:", startingCount);
     
-    let days = _.groupBy(history, (h) => {
-      return h.day;
-    });
-
-    let dayCounts = _.map(days, (dayData,key) => {
+    let days = _.groupBy( history, (h) => ( h.day ) );
+    
+    return _.map(days, (dayData,key) => {
       let count = _.reduce(dayData, (result,dataPoint) => {
         return result += dataPoint.quantity;
       },0);
 
-      let dayValue = moment(key).startOf('day').utc().valueOf(),
-          runningTotal = startingCount -= count;
+      let dayValue      = moment(key).utc().startOf('day').valueOf(),
+          runningTotal  = startingCount -= count;
 
       return [ dayValue , runningTotal ];
     });
-
-    return dayCounts;
+  }
+  
+  calculateAverageDemandVariability(product,history) {
+    return this.supplyAndDemandHistoryService
+      .getHistoricalDemandVariabilityWithSource(product);
+  }
+  
+  calculateAverageDemand(product,history) {
+    return this.supplyAndDemandHistoryService
+      .getHistoricalDemandAverageForProductWithSource(product);
   }
 }
 

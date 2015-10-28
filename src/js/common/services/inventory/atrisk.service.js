@@ -1,3 +1,5 @@
+/* global _ */
+/* global moment */
 class AtRiskService {
   constructor($q,$timeout,ProductsService,InventoryProjectionService) {
     this.$q = $q;
@@ -15,7 +17,7 @@ class AtRiskService {
       { id: 290, sku: 'REFRESH', name: 'Refresh Clean Gel', atRisk: '11/01/2015', dropDead: '11/22/2015', threshold: 3000 },
       { id: 334, sku: 'BUBBLE-LV', name: 'Bubble Bath - Lavender', atRisk: '11/06/2015', dropDead: '11/25/2015', threshold: 3000 },
       { id: 285, sku: 'KONJAC', name: 'Konjac Sponge', atRisk: '11/18/2015', dropDead: '11/29/2015', threshold: 3000 }
-    ]
+    ];
 
     return this.$q( (resolve,reject) => {
       this.$timeout(() => {

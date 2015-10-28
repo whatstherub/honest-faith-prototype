@@ -19,9 +19,9 @@ class ProductProjectionController {
 
   requestHistory() {
     return this.supplyAndDemandHistoryService.getHistoryForProduct(
+      this.product,
       this.projectionStartDate,
-      this.projectionEndDate,
-      this.product
+      this.projectionEndDate
     )
   }
 

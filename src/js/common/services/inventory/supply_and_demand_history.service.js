@@ -1,3 +1,5 @@
+/* global moment */
+/* global _ */
 class SupplyAndDemandHistoryService {
 
   constructor($q,$timeout) {
@@ -107,7 +109,11 @@ class SupplyAndDemandHistoryService {
 
     dateRange.by('days', (day) => {
       _.each( averageDemand, (data,source) => {
-        history.push( { day: day, source: source, quantity: this.varyDemand(demandVariability,data.qty) } );
+        history.push({ 
+          day: day, 
+          source: source, 
+          quantity: this.varyDemand(demandVariability,data.qty) 
+         });
       });
     });
 
@@ -139,7 +145,7 @@ class SupplyAndDemandHistoryService {
     return history;
   }
 
-  getHistoryForProduct( startDate, endDate, product ) {
+  getHistoryForProduct( product, startDate, endDate ) {
     let averageDemand     = this.getHistoricalDemandAverageForProductWithSource(product);
     let demandVariability = this.getHistoricalDemandVariability(product);
 
@@ -152,7 +158,7 @@ class SupplyAndDemandHistoryService {
     let sortedDemandHistory = _.sortBy(augmentedDemandHistory, 'day');
 
     return this.$q( (resolve,reject) => {
-      this.$timeout( () => { resolve(augmentedDemandHistory) } );
+      this.$timeout( () => { resolve(sortedDemandHistory) } );
     });
   }
 }

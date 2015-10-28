@@ -1,12 +1,17 @@
+/* global moment */
 class ProductProjectionSummaryController {
-	constructor() {
+	constructor(InventoryProjectionService) {
+		this.inventoryProjectionService = InventoryProjectionService;
+		
 		this.riskClass = [];
 
 		this.riskThresholdDate = moment().add(14, 'days');
 		this.deadThresholdDate = moment().add(7, 'days');
-
+		
+		this.calculateProjections();
 		this.calculateRiskStatus();
 		this.calculateDisplayStates();
+
 	}
 
 	isAtRisk( atRiskDate ) {
@@ -19,6 +24,31 @@ class ProductProjectionSummaryController {
 			|| atRiskDate.isSame(this.deadThresholdDate);
 	}
 
+	get prettyAtRisk() {
+		return this.productAtRiskMoment.format("MMM Do");
+	}
+
+	get prettyDropDead() {
+		return this.productDropDeadMoment.format("MMM Do");
+	}
+
+	get productAtRiskMoment() {
+		return moment(this.productAtRisk, "M/D/YYYY");
+	}
+
+	get productDropDeadMoment() {
+		return moment(this.productDropDead, "M/D/YYYY")
+	}
+	
+	calculateProjections() {
+		this.projections = this.inventoryProjectionService.calculateProjections(this.product);
+		
+		console.warn(this.projections);
+		
+		this.productAtRisk 		= this.product.atRisk;
+		this.productDropDead 	= this.product.dropDead;
+	}
+	
 	calculateRiskStatus() {
 		this.daysUntilOutOfStock = this.productDropDeadMoment.diff(moment(),'days');
 		this.daysUntilRisk       = this.productAtRiskMoment.diff(moment(), 'days' );
@@ -35,22 +65,6 @@ class ProductProjectionSummaryController {
 		}
 
 		return this.riskStatus;
-	}
-
-	get prettyAtRisk() {
-		return this.productAtRiskMoment.format("MMM Do");
-	}
-
-	get prettyDropDead() {
-		return this.productDropDeadMoment.format("MMM Do");
-	}
-
-	get productAtRiskMoment() {
-		return moment(this.product.atRisk, "M/D/YYYY");
-	}
-
-	get productDropDeadMoment() {
-		return moment(this.product.dropDead, "M/D/YYYY")
 	}
 
 	calculateDisplayStates() {

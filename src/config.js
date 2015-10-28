@@ -1,3 +1,4 @@
+/* global System */
 System.config({
   map: {
     "root.app": "js/app/root.module",
@@ -15,7 +16,6 @@ System.config({
 
    "common.components.inventory.product_projection_summary.product_projection_summary_list.directive": "js/common/components/inventory/product_projection_summary/product_projection_summary_list.directive",
    "common.components.inventory.product_projection_summary.product_projection_summary_list.controller": "js/common/components/inventory/product_projection_summary/product_projection_summary_list.controller",
-
 
     "common.components.inventory.at_risk_products_over_time.controller": "js/common/components/inventory/at_risk_products_over_time.controller",
     "common.components.inventory.at_risk_products_over_time.directive": "js/common/components/inventory/at_risk_products_over_time.directive",
