@@ -1,9 +1,16 @@
 class InventoryProjectionService {
-  constructor() {}
+  constructor(InventoryDetailsService) {
+    this.inventoryDetailsService = InventoryDetailsService;
+  }
 
-  calculateTotalDemandByDay(history) {
-    let startingCount = 55000;
+  calculateTotalDemandByDay(product,history) {
+    let today = moment().startOf('day');
 
+    let startingCount = this.inventoryDetailsService
+      .getCurrentInventoryLevelForProductAt(product, today);
+
+    console.warn("starting count:", startingCount);
+    
     let days = _.groupBy(history, (h) => {
       return h.day;
     });
@@ -13,7 +20,10 @@ class InventoryProjectionService {
         return result += dataPoint.quantity;
       },0);
 
-      return [ moment(key).startOf('day').utc().valueOf(), startingCount -= count ];
+      let dayValue = moment(key).startOf('day').utc().valueOf(),
+          runningTotal = startingCount -= count;
+
+      return [ dayValue , runningTotal ];
     });
 
     return dayCounts;

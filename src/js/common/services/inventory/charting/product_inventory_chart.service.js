@@ -3,10 +3,10 @@ class ProductInventoryChartService {
     this.inventoryProjectionService = InventoryProjectionService;
   }
 
-  calculateTotalDemandByDay(history) {
-    return this.inventoryProjectionService.calculateTotalDemandByDay(history);
+  calculateTotalDemandByDay(product,history) {
+    return this.inventoryProjectionService
+      .calculateTotalDemandByDay(product,history);
   }
-
 
   collectWarnings( dayCounts ) {
     var data = [];
@@ -23,10 +23,26 @@ class ProductInventoryChartService {
     return data;
   }
 
+  produceSeries(product, history, opts = {}) {
+    var series = [];
 
+    if( opts.inventory !== false ) {
+      let { inventoryOpts = {} } = opts.inventory;
 
-  synthesizeFlagSeries(history, opts = {}) {
-    let dayCounts = this.calculateTotalDemandByDay(history);
+      series.push( this.synthesizeInventorySeries(product, history, inventoryOpts) );
+    }
+
+    if( opts.flags !== false ) {
+      let { flagsOpts = {} } = opts.flags;
+
+      series.push( this.synthesizeFlagSeries(product, history, flagsOpts) );
+    }
+
+    return series;
+  }
+
+  synthesizeFlagSeries(product, history, opts = {}) {
+    let dayCounts = this.calculateTotalDemandByDay(product, history);
 
     var data = this.collectWarnings( dayCounts );
 
@@ -40,8 +56,8 @@ class ProductInventoryChartService {
     }, opts);
   }
 
-  synthesizeInventorySeries(history, opts = {}) {
-    let dayCounts = this.calculateTotalDemandByDay(history);
+  synthesizeInventorySeries(product, history, opts = {}) {
+    let dayCounts = this.calculateTotalDemandByDay(product, history);
     let daySeries = _.sortBy( dayCounts, (c) => ( c[0] ) );
 
     return Object.assign({
@@ -65,8 +81,8 @@ class ProductInventoryChartService {
     }, opts);
   }
 
-  produceChartConfig() {
-    return {
+  produceChartConfig(config = {}) {
+    return Object.assign({
       options: {
         chart: {
           height: 200
@@ -102,7 +118,7 @@ class ProductInventoryChartService {
       title: {
         text: null
       }
-    };
+    }, config);
   }
 }
 

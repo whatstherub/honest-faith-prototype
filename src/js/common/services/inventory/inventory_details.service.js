@@ -3,7 +3,9 @@ class InventoryDetailsService {
 
   }
 
-  
+  getCurrentInventoryLevelForProductAt( product, day ) {
+    return 55000;
+  }
 }
 
 export default InventoryDetailsService;
