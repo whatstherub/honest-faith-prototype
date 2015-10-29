@@ -1,0 +1,33 @@
+div.row
+  div.col-xs-12 
+    div.row
+      div.col-xs-6
+        input.form-control id="date" type="text" ng-model="vm.tweakEvent.date" placeholder="10/27/2015"
+      div.col-xs-6
+        ui-select ng-model="vm.tweakEvent.type" theme="bootstrap"
+          ui-select-match placeholder="Type" {{$select.selected}}
+          ui-select-choices repeat="type in vm.tweaksOptions.type | filter: $select.search"
+            span ng-bind-html="type | highlight: $select.search"
+    div.row
+      div.col-xs-6
+        ui-select ng-model="vm.tweakEvent.channel" theme="bootstrap"
+          ui-select-match placeholder="Channel" {{$select.selected}}
+          ui-select-choices repeat="channel in vm.tweaksOptions.channel | filter: $select.search"
+            span ng-bind-html="channel | highlight: $select.search"
+      div.col-xs-6
+        ui-select ng-model="vm.tweakEvent.customer" theme="bootstrap"
+          ui-select-match placeholder="Customer" {{$select.selected}}
+          ui-select-choices repeat="customer in vm.tweaksOptions.customer | filter: $select.search"
+            span ng-bind-html="customer | highlight: $select.search"
+    div.row
+      div.col-xs-6
+        ui-select ng-model="vm.tweakEvent.source" theme="bootstrap"
+          ui-select-match placeholder="Source" {{$select.selected}}
+          ui-select-choices repeat="source in vm.tweaksOptions.source | filter: $select.search"
+            span ng-bind-html="source | highlight: $select.search"
+      div.col-xs-6
+        input.form-control type="text" ng-model="vm.tweakEvent.quantity" placeholder="quantity"
+    div.row
+      div.col-xs-12
+        button.btn.btn-default type="submit" ng-click="vm.addNewEvent()" Add
+        

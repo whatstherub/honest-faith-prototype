@@ -1,13 +1,14 @@
 class ProductProjectionTweakListDirective {
 	constructor() {
-		Object.assign({
+		Object.assign(this,{
 			scope: {},
+			templateUrl: 'js/common/components/inventory/product_projection_tweaks/product_projection_tweak_list.template.html',
 			controller: 'ProductProjectionTweakListController',
 			controllerAs: 'vm',
 			bindToController: {
 				product: '='
 			}
-		}, this);
+		});
 	}
 	static builder() {
 		return new ProductProjectionTweakListDirective();

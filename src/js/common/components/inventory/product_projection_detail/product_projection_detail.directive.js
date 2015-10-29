@@ -1,13 +1,13 @@
 class ProductProjectionDetailDirective {
   constructor() {
-    Object.assign({
+    Object.assign(this,{
       scope: {},
       controller: 'ProductProjectionDetailController',
       controllerAs: 'vm',
       bindToController: {
         product: '='
       }
-    }, this);
+    });
   }
 
   static builder() {

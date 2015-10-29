@@ -2,9 +2,10 @@
 /* global _ */
 class SupplyAndDemandHistoryService {
 
-  constructor($q,$timeout) {
+  constructor($q,$timeout,TweaksService) {
     this.$q = $q;
     this.$timeout = $timeout;
+    this.tweaksService = TweaksService;
 
     this.tweaks = [];
 
@@ -109,10 +110,10 @@ class SupplyAndDemandHistoryService {
 
     dateRange.by('days', (day) => {
       _.each( averageDemand, (data,source) => {
-        history.push({ 
-          day: day, 
-          source: source, 
-          quantity: this.varyDemand(demandVariability,data.qty) 
+        history.push({
+          day: day,
+          source: source,
+          quantity: this.varyDemand(demandVariability,data.qty)
          });
       });
     });
@@ -128,20 +129,8 @@ class SupplyAndDemandHistoryService {
     }
   }
 
-  addTweak( tweak ) {
-    this.tweaks.push( tweak );
-  }
-
-  clearTweaks() {
-    this.tweaks.length = 0;
-  }
-  
-  tweaksForProduct(product) {
-    return this.tweaks.filter( (t) => t.product.id == product.id );
-  }
-  
   augmentHistoryWithAssumptions(product,history) {
-    for( let tweak of this.tweaksForProduct(product) ) {
+    for( let tweak of this.tweaksService.tweaksForProduct(product) ) {
       console.warn("augmenting tweak",tweak);
       history.push( this.transformTweakToSequence(tweak) );
     }

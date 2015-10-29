@@ -1,6 +1,17 @@
 class ProductProjectionTweakListController {
-	constructor() {
-		
+	constructor($scope,TweaksService) {
+		this.tweaksService = TweaksService;
+	}
+
+	handleTweakUpdate() {
+
+	}
+	
+	watchTweakUpdates() {
+		$scope.$watch(
+			() => this.tweaksService.tweaksForProduct(this.product),
+			(newTweaks) => this.handleTweakUpdate()
+		);
 	}
 }
 

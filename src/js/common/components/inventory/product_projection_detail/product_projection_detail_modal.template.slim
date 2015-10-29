@@ -1,5 +1,10 @@
-div.product-projection-detail-modal-content
-	div.projection-container
-		product-projection product="vm.product"
-	div.tweak-container
-		inventory-projection-tweaks
+div class="modal" tabindex="-1" role="dialog" aria-hidden="true"
+  div class="modal-dialog" ng-class="vm.dialogClasses"
+    div class="modal-content"
+      div class="modal-header" ng-show="title"
+        button type="button" class="close" aria-label="Close" ng-click="$hide()"
+          span aria-hidden="true" &times;
+        h4 class="modal-title" ng-bind="title"
+      div class="modal-body" ng-bind="content"
+      div class="modal-footer"
+        button type="button" class="btn btn-default" ng-click="$hide()">Close

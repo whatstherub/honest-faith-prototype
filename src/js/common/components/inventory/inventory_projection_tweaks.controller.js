@@ -1,13 +1,12 @@
 class InventoryProjectionTweaksController {
-  constructor($scope,$rootScope,AtRiskService,SupplyAndDemandHistoryService) {
+  constructor($scope,$rootScope,AtRiskService,TweaksService) {
     this.$scope = $scope;
     this.$rootScope = $rootScope;
 
     this.atRiskService = AtRiskService;
-    this.supplyAndDemandHistoryService = SupplyAndDemandHistoryService;
+    this.tweaksService = TweaksService;
 
     this.tweakProduct = {};
-
     this.tweakEvent = {};
 
     this.tweaksOptions = {
@@ -37,10 +36,8 @@ class InventoryProjectionTweaksController {
   addNewEvent() {
     console.log("Adding", this.tweakEvent);
 
-    this.supplyAndDemandHistoryService.addTweak(this.tweakEvent);
+    this.tweaksService.addTweak(this.tweakEvent);
 
-    this.broadcastUpdate({ type: 'add', event: this.tweakEvent});
-    
     this.tweakEvent = {};
   }
 
@@ -71,18 +68,11 @@ class InventoryProjectionTweaksController {
   }
 
   updateVariabilityForProduct( product, type, variability ) {
-    this.supplyAndDemandHistoryService.updateVariability( product, {
+    this.tweaksService.updateVariability( product, {
       type: variability
     });
 
     this.broadcastUpdate();
-  }
-
-  broadcastUpdate(data) {
-    this.$rootScope.$broadcast('inventory-tweaks-updated', {
-      updateType: data.type,
-      updateEvent: data.event 
-    });
   }
 }
 
