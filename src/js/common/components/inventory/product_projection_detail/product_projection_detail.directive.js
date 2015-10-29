@@ -1,6 +1,7 @@
 class ProductProjectionDetailDirective {
   constructor() {
     Object.assign({
+      scope: {},
       controller: 'ProductProjectionDetailController',
       controllerAs: 'vm',
       bindToController: {

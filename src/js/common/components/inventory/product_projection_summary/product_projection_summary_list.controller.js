@@ -1,25 +1,15 @@
 class ProductProjectionSummaryListController {
-  constructor($scope,$modal) {
+  constructor($scope,$modal,ProductProjectionModalService) {
     this.$scope = $scope;
     this.$modal = $modal;
+    this.productProjectionModalService = ProductProjectionModalService;
   }
 
   displayDetail(product) {
     console.warn('display detail');
-
-    this.modalInstance = this.$modal({
-      title: product.name,
-      placement: 'center',
-      controller: () => {
-        console.warn('ctrl created');
-        return {
-          product: product
-        }
-      },
-      controllerAs: 'vm',
-      contentTemplate: 'js/common/components/inventory/product_projection_detail/product_projection_detail_modal.template.html'
-    });
-
+    
+    this.modalInstance = this.productProjectionModalService.display(product)
+    
     this.modalInstance.$promise.then( () => {
       this.modalInstance.show();
     });

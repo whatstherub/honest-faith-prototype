@@ -11,7 +11,11 @@ System.config({
     "common.components.inventory": "js/common/components/inventory/inventory.module",
     "common.components.inventory.product_projection_summary": "js/common/components/inventory/product_projection_summary/product_projection_summary.module",
     "common.components.inventory.product_projection_detail": "js/common/components/inventory/product_projection_detail/product_projection_detail.module",
-
+    "common.components.inventory.product_projection_tweaks": "js/common/components/inventory/product_projection_tweaks/product_projection_tweaks.module",
+    
+    "common.components.inventory.product_projection_tweaks.tweak_event_creation_display.directive": "js/common/components/inventory/product_projection_tweaks/tweak_event_creation_display.directive",
+    "common.components.inventory.product_projection_tweaks.tweak_event_creation_display.controller": "js/common/components/inventory/product_projection_tweaks/tweak_event_creation_display.controller",
+    
     "common.components.inventory.product_projection_detail.product_projection_detail.directive": "js/common/components/inventory/product_projection_detail/product_projection_detail.directive",
     "common.components.inventory.product_projection_detail.product_projection_detail.controller": "js/common/components/inventory/product_projection_detail/product_projection_detail.controller",
 
@@ -29,7 +33,11 @@ System.config({
     "common.services.inventory.inventory_projection.service": "js/common/services/inventory/inventory_projection.service",
     "common.services.inventory.supply_and_demand_history.service": "js/common/services/inventory/supply_and_demand_history.service",
     "common.services.inventory.inventory_details.service": "js/common/services/inventory/inventory_details.service",
+    
+    "common.services.inventory.ui.product_projection_modal.service": "js/common/services/inventory/ui/product_projection_modal.service",
+    
     "common.services.inventory.charting.product_inventory_chart.service": "js/common/services/inventory/charting/product_inventory_chart.service",
+    "common.services.inventory.charting.product_inventory_risk_over_time_chart.service": "js/common/services/inventory/charting/product_inventory_risk_over_time_chart.service",
 
     "common.components.inventory.product_projection.controller": "js/common/components/inventory/product_projection.controller",
     "common.components.inventory.product_projection.directive": "js/common/components/inventory/product_projection.directive",

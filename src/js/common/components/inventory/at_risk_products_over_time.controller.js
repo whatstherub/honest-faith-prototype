@@ -1,11 +1,12 @@
 class AtRiskProductsOverTimeController {
 
-  constructor($scope,$log,AtRiskService) {
+  constructor($scope,$log,AtRiskService,ProductInventoryRiskOverTimeChartService) {
     this.$log   = $log;
     this.$scope = $scope;
 
     this.atRiskService = AtRiskService;
-
+    this.productInventoryRiskOverTimeChartService = ProductInventoryRiskOverTimeChartService;
+    
     this.chartConfig = this.produceChartConfig();
     
     this.watchForProductUpdates();
@@ -82,38 +83,7 @@ class AtRiskProductsOverTimeController {
   }
 
   produceChartConfig() {
-    return {
-      options: {
-        chart: {
-          type: 'column'
-        },
-        plotOptions: {
-          series: {
-            stacking: 'normal'
-          }
-        },
-        exporting: {
-          enabled: false
-        }
-      },
-      xAxis: [{
-        type: 'datetime',
-        reversed: false
-      }],
-      yAxis: {
-        title: {
-          text: 'number of products'
-        },
-        labels: {
-          formatter: function () {
-            return Math.abs(parseInt(this.value));
-          }
-        }
-      },
-      title: {
-        text: "At Risk Products"
-      }
-    };
+    return this.productInventoryRiskOverTimeChartService.produceChartConfig();
   }
 }
 

@@ -39,9 +39,9 @@ class InventoryProjectionTweaksController {
 
     this.supplyAndDemandHistoryService.addTweak(this.tweakEvent);
 
+    this.broadcastUpdate({ type: 'add', event: this.tweakEvent});
+    
     this.tweakEvent = {};
-
-    this.broadcastUpdate();
   }
 
   updateSelectedProduct(product) {
@@ -78,9 +78,10 @@ class InventoryProjectionTweaksController {
     this.broadcastUpdate();
   }
 
-  broadcastUpdate() {
+  broadcastUpdate(data) {
     this.$rootScope.$broadcast('inventory-tweaks-updated', {
-
+      updateType: data.type,
+      updateEvent: data.event 
     });
   }
 }

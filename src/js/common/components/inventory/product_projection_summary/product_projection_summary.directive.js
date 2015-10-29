@@ -1,13 +1,15 @@
 class ProductProjectionSummaryDirective {
   constructor() {
-    this.scope = {};
-    this.templateUrl = 'js/common/components/inventory/product_projection_summary/product_projection_summary.template.html'
-    this.controller = 'ProductProjectionSummaryController';
-    this.controllerAs = 'vm';
-    this.bindToController = {
-      product: '=',
-      handleSelection: '&'
-    }
+    Object.assign({
+      scope: {};
+      templateUrl: 'js/common/components/inventory/product_projection_summary/product_projection_summary.template.html'
+      controller: 'ProductProjectionSummaryController';
+      controllerAs: 'vm';
+      bindToController: {
+        product: '=',
+        handleSelection: '&'
+      }  
+    },this);
   }
 
   static builder() {
