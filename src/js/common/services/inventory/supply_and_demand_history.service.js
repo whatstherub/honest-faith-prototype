@@ -135,9 +135,13 @@ class SupplyAndDemandHistoryService {
   clearTweaks() {
     this.tweaks.length = 0;
   }
-
-  augmentHistoryWithAssumptions(history) {
-    for( let tweak of this.tweaks ) {
+  
+  tweaksForProduct(product) {
+    return this.tweaks.filter( (t) => t.product.id == product.id );
+  }
+  
+  augmentHistoryWithAssumptions(product,history) {
+    for( let tweak of this.tweaksForProduct(product) ) {
       console.warn("augmenting tweak",tweak);
       history.push( this.transformTweakToSequence(tweak) );
     }
@@ -153,7 +157,7 @@ class SupplyAndDemandHistoryService {
 
     let history = this.synthesizeDemand(dateRange,demandVariability,averageDemand);
 
-    let augmentedDemandHistory = this.augmentHistoryWithAssumptions(history);
+    let augmentedDemandHistory = this.augmentHistoryWithAssumptions(product,history);
 
     let sortedDemandHistory = _.sortBy(augmentedDemandHistory, 'day');
 

@@ -9,6 +9,7 @@ class ProductProjectionSummaryListController {
 
     this.modalInstance = this.$modal({
       title: product.name,
+      placement: 'center',
       controller: () => {
         console.warn('ctrl created');
         return {
