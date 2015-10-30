@@ -9,7 +9,7 @@
   "scripts": {
     "build": "node --harmony ./node_modules/.bin/gulp",
     "serve": "node --harmony ./node_modules/.bin/gulp serve",
-    "start": "node --harmony ./node_modules/.bin/gulp build run",
+    "start": "node --harmony ./node_modules/.bin/gulp run",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
