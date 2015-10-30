@@ -1,4 +1,5 @@
 var koa = require('koa'),
+    auth  = require('koa-basic-auth'),
     serve = require('koa-static');
 
 var app = koa();
