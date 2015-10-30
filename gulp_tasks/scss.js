@@ -13,8 +13,10 @@ var bowerGlob = ['**/*.scss','**/*.css'],
     bowerConfig = { base: 'vendor/assets/bower_components' };
 
 gulp.task('fontawesome', function() {
-  return gulp.src( bowerConfig.base + '/font-awesome/fonts/**.*')
-    .pipe(gulp.dest('assets/fonts'));
+  return gulp.src([
+    bowerConfig.base + '/font-awesome/fonts/**.*',
+    bowerConfig.base + '/bootstrap-sass/assets/fonts/*/**.*'
+  ]).pipe(gulp.dest('assets/fonts'));
 });
 
 gulp.task('css:application', function(){

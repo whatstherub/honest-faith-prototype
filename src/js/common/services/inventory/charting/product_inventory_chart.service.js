@@ -8,23 +8,25 @@ class ProductInventoryChartService {
       .calculateTotalDemandByDay(product,history);
   }
 
+  detectOutOfStock( dayCounts ) {
+    let outOfStockDay = _.find( dayCounts, (c) => c[1] <= 0 );
+
+    if( outOfStockDay ) {
+      console.warn("found OOS");
+      return [{ x: outOfStockDay[0], title: "Out of stock"}];
+    }
+
+    return [];
+  }
+
   collectWarnings( dayCounts ) {
-    var data = [];
-
-    _.find( dayCounts, (c) => {
-      if( c[1] <= 0 ) {
-        data.push({ x: c[0], title: "Out of stock"});
-        console.warn("found OOS");
-        return true;
-      }
-      return false;
-    });
-
-    return data;
+    return _.flatten([
+      this.detectOutOfStock( dayCounts )
+    ]);
   }
 
   produceSeries(product, history, opts = {}) {
-    var series = [];
+    let series = [];
 
     if( opts.inventory !== false ) {
       let { inventoryOpts = {} } = opts.inventory;
@@ -44,7 +46,7 @@ class ProductInventoryChartService {
   synthesizeFlagSeries(product, history, opts = {}) {
     let dayCounts = this.calculateTotalDemandByDay(product, history);
 
-    var data = this.collectWarnings( dayCounts );
+    let data = this.collectWarnings( dayCounts );
 
     return Object.assign({
       id: 'inventory-warnings',

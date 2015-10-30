@@ -2,7 +2,7 @@ div.row
   div.col-xs-12 
     div.row
       div.col-xs-6
-        input.form-control id="date" type="text" ng-model="vm.tweakEvent.date" placeholder="10/27/2015"
+        input.form-control id="date" type="text" bs-datepicker="true" ng-model="vm.tweakEvent.date" placeholder="10/27/2015"
       div.col-xs-6
         ui-select ng-model="vm.tweakEvent.type" theme="bootstrap"
           ui-select-match placeholder="Type" {{$select.selected}}

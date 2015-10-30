@@ -6,11 +6,11 @@ class ProductProjectionTweakListController {
 	handleTweakUpdate() {
 
 	}
-	
+
 	watchTweakUpdates() {
 		$scope.$watch(
 			() => this.tweaksService.tweaksForProduct(this.product),
-			(newTweaks) => this.handleTweakUpdate()
+			(newTweaks) => this.handleTweakUpdate(newTweaks)
 		);
 	}
 }

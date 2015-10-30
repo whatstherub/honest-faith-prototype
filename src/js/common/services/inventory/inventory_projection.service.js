@@ -5,16 +5,16 @@ class InventoryProjectionService {
     this.inventoryDetailsService = InventoryDetailsService;
     this.supplyAndDemandHistoryService = SupplyAndDemandHistoryService;
   }
-  
+
   calculateProjections(product,history) {
     let today = moment().utc().startOf('day');
-    
+
     let startingCount = this.inventoryDetailsService
       .getCurrentInventoryLevelForProductAt(product, today);
 
     let demandAverages    = this.calculateAverageDemand(product,history),
         demandVariability = this.calculateAverageDemandVariability(product,history);
-    
+
     return {
       asOf: today,
       currentInventory: startingCount,
@@ -22,34 +22,37 @@ class InventoryProjectionService {
       demandVariability: demandVariability
     };
   }
-  
+
   calculateTotalDemandByDay(product,history) {
     let today = moment().utc().startOf('day');
-    
+
     let startingCount = this.inventoryDetailsService
       .getCurrentInventoryLevelForProductAt(product, today);
 
     console.warn("starting count:", startingCount);
-    
+
     let days = _.groupBy( history, (h) => ( h.day ) );
-    
+
     return _.map(days, (dayData,key) => {
       let count = _.reduce(dayData, (result,dataPoint) => {
         return result += dataPoint.quantity;
       },0);
 
-      let dayValue      = moment(key).utc().startOf('day').valueOf(),
+      console.warn('before moment(key)', key);
+      console.warn(typeof key);
+
+      let dayValue      = dayData[0].day.utc().startOf('day').valueOf(),
           runningTotal  = startingCount -= count;
 
       return [ dayValue , runningTotal ];
     });
   }
-  
+
   calculateAverageDemandVariability(product,history) {
     return this.supplyAndDemandHistoryService
       .getHistoricalDemandVariabilityWithSource(product);
   }
-  
+
   calculateAverageDemand(product,history) {
     return this.supplyAndDemandHistoryService
       .getHistoricalDemandAverageForProductWithSource(product);
