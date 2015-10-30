@@ -10,7 +10,7 @@ if( environment == 'production' ) {
   app.use(auth({
     name: 'honest',
     pass: 'faith'
-  });
+  }));
 } 
 
 app.use(serve('web'));
