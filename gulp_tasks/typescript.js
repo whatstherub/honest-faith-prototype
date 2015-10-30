@@ -14,5 +14,5 @@ gulp.task('ts', function () {
     .pipe(typescript(tsProject))
     .pipe(remember('typescripts'))
     .pipe(concat('ts.js'))
-    .pipe(gulp.dest('assets/js'));
+    .pipe(gulp.dest('web/assets/js'));
 });

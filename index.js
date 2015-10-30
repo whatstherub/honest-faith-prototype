@@ -5,5 +5,5 @@ var app = koa();
 
 var port = process.env['PORT'] || 8000;
 
-app.use(serve('.'));
+app.use(serve('web'));
 app.listen(port);

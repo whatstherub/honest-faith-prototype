@@ -22,5 +22,5 @@ gulp.task('slim', function(){
     }))
     .pipe(remember('slim'))
     .pipe(concat('templates.js'))
-    .pipe(gulp.dest('assets/js'));
+    .pipe(gulp.dest('web/assets/js'));
 });

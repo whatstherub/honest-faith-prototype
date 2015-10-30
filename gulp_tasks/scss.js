@@ -16,7 +16,7 @@ gulp.task('fontawesome', function() {
   return gulp.src([
     bowerConfig.base + '/font-awesome/fonts/**.*',
     bowerConfig.base + '/bootstrap-sass/assets/fonts/*/**.*'
-  ]).pipe(gulp.dest('assets/fonts'));
+  ]).pipe(gulp.dest('web/assets/fonts'));
 });
 
 gulp.task('css:application', function(){
@@ -36,7 +36,7 @@ gulp.task('css:application', function(){
             browsers: ['last 2 versions'],
             cascade: false
     }))
-    .pipe(gulp.dest('assets/css'))
+    .pipe(gulp.dest('web/assets/css'))
     .pipe(browserSync.stream());
 });
 
@@ -44,6 +44,6 @@ gulp.task('css:libraries', function(){
   return gulp.src('src/css/libraries.scss')
     .pipe(sass({ indentedSyntax: false }))
     .on('error', sass.logError)
-    .pipe(gulp.dest('assets/css'))
+    .pipe(gulp.dest('web/assets/css'))
     .pipe(browserSync.stream());
 });

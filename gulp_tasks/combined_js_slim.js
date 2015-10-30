@@ -11,5 +11,5 @@ gulp.task('combined-js-slim', ['js','slim'], function() {
                    'src/config.js'])
     .pipe(concat('app.js'))
     .pipe(gulpif(argv.env == 'production' || argv.env == 'staging', uglify()))
-    .pipe(gulp.dest('assets/js'));
+    .pipe(gulp.dest('web/assets/js'));
 });

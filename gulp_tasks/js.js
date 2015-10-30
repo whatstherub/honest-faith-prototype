@@ -19,15 +19,15 @@ gulp.task('js', function () {
     }))
     .pipe(remember('scripts'))
     .pipe(concat('app2.js'))
-    .pipe(gulp.dest('assets/js'));
+    .pipe(gulp.dest('web/assets/js'));
 });
 
 gulp.task('js:bower', function() {
   var bowerGlob = '**/*.js',
       bowerConfig = { base: 'vendor/assets/bower_components' };
-    
+
   return gulp.src(mainBowerFiles(bowerGlob), bowerConfig)
              .pipe(concat('deps.js'))
              .pipe(gulpif(argv.env == 'production' || argv.env == 'staging', uglify()))
-             .pipe(gulp.dest('assets/js'));
+             .pipe(gulp.dest('web/assets/js'));
 });
