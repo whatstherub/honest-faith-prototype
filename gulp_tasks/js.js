@@ -3,6 +3,9 @@ var gulp = require('gulp'),
     cache   = require('gulp-cached'),
     babel   = require('gulp-babel'),
     remember = require('gulp-remember'),
+    uglify   = require('gulp-uglify'),
+    gulpif   = require('gulp-if'),
+    argv     = require('yargs').argv,
     concat   = require('gulp-concat'),
     mainBowerFiles = require('main-bower-files');
 
@@ -25,5 +28,6 @@ gulp.task('js:bower', function() {
     
   return gulp.src(mainBowerFiles(bowerGlob), bowerConfig)
              .pipe(concat('deps.js'))
+             .pipe(gulpif(argv.env == 'production' || argv.env == 'staging', uglify()))
              .pipe(gulp.dest('assets/js'));
 });
