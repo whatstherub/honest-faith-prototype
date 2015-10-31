@@ -70,6 +70,7 @@
     "gulp-koa-service": "0.0.8",
     "koa": "^1.1.1",
     "koa-basic-auth": "^1.1.2",
+    "koa-gzip": "^0.1.0",
     "koa-static": "^1.5.1"
   }
 }
