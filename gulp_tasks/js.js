@@ -7,18 +7,21 @@ var gulp = require('gulp'),
     gulpif   = require('gulp-if'),
     argv     = require('yargs').argv,
     concat   = require('gulp-concat'),
+    sourcemaps = require('gulp-sourcemaps'),
     mainBowerFiles = require('main-bower-files');
 
 gulp.task('js', function () {
   return gulp.src(['src/**/*.js'])
     .pipe(plumber())
     .pipe(cache('scripts'))
+    .pipe(sourcemaps.init())
     .pipe(babel({
       modules: 'system',
       moduleIds: true
     }))
     .pipe(remember('scripts'))
     .pipe(concat('app2.js'))
+    .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('web/assets/js'));
 });
 

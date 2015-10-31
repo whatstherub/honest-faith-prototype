@@ -1,5 +1,6 @@
 var koa = require('koa'),
     auth  = require('koa-basic-auth'),
+    gzip  = require('koa-gzip'),
     serve = require('koa-static');
 
 var app = koa();
@@ -28,5 +29,7 @@ if( environment == 'production' ) {
   }));
 }
 
+app.use(gzip());
 app.use(serve('web'));
+
 app.listen(port);
