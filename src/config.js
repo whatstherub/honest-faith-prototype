@@ -9,6 +9,9 @@ System.config({
     "app.hello.directive": "js/app/hello/hello.directive",
 
     "common.components.inventory": "js/common/components/inventory/inventory.module",
+
+    "common.components.inventory.loading.directive": "js/common/components/inventory/loading.directive",
+
     "common.components.inventory.product_projection_summary": "js/common/components/inventory/product_projection_summary/product_projection_summary.module",
     "common.components.inventory.product_projection_detail": "js/common/components/inventory/product_projection_detail/product_projection_detail.module",
     "common.components.inventory.product_projection_tweaks": "js/common/components/inventory/product_projection_tweaks/product_projection_tweaks.module",

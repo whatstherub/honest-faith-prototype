@@ -58,9 +58,6 @@ class ProductProjectionSummaryController {
 		this.daysUntilOutOfStock = this.productDropDeadMoment.diff(moment(),'days');
 		this.daysUntilRisk       = this.productAtRiskMoment.diff(moment(), 'days' );
 
-		console.warn("OOS:", this.daysUntilOutOfStock);
-		console.warn("DUR:", this.daysUntilRisk);
-
 		if( this.isCritical(this.productAtRiskMoment) ) {
 			this.riskStatus = 'critical';
 		} else if( this.isAtRisk(this.productAtRiskMoment) ) {

@@ -1,3 +1,37 @@
-.test {
-  background-color: red;
+$loading-leave-time: 1.0s;
+
+.loading {
+
+  .mask {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    background-color: red;
+    text-align: center;
+    z-index: 9999;
+    opacity: 1.0;
+
+    transition: $loading-leave-time linear all;
+
+    &.ng-leave {
+      opacity: 1.0;
+
+      &.ng-leave-active {
+        opacity: 0;
+      }
+    }
+
+  }
+
+  .tagline {
+    color: white;
+    font-size: 72px;
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    align: center;
+  }
 }

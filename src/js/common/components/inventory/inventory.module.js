@@ -27,6 +27,7 @@ import ProductProjectionChartController from 'common.components.inventory.produc
 import InventoryProjectionTweaksDirective from 'common.components.inventory.inventory_projection_tweaks.directive';
 import InventoryProjectionTweaksController from 'common.components.inventory.inventory_projection_tweaks.controller';
 
+import LoadingDirective from 'common.components.inventory.loading.directive';
 
 var moduleName = 'common.components.inventory';
 
@@ -43,6 +44,8 @@ angular.module(moduleName, ['ngAnimate','mgcrea.ngStrap', 'ui.select'])
   .service('ProductInventoryChartService', ProductInventoryChartService)
   .service('ProductInventoryRiskOverTimeChartService', ProductInventoryRiskOverTimeChartService)
   .service('ProductProjectionModalService',ProductProjectionModalService)
+
+  .directive('loading', LoadingDirective.builder)
 
   .controller('ProductProjectionController', ProductProjectionController )
   .directive('productProjection', ProductProjectionDirective.builder)
