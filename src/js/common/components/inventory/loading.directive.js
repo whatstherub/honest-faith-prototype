@@ -10,12 +10,9 @@ class LoadingDirective {
   }
 
   compile() {
-    console.warn('compile link', this);
     return this.link.bind(this);
   }
   link(scope, element, attributes) {
-    console.warn("link");
-
     this.$timeout( () => {
       let mask = element.children().eq(0);
 

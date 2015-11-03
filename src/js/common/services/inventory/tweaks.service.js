@@ -16,7 +16,7 @@ class TweaksService {
       channel: 'ecom',
       customer: 'shop',
       source: 'assumption',
-      quantity: 200,
+      quantity: 500,
       date: '11/08/2015'
     }];
   }

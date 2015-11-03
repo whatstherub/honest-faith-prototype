@@ -33,14 +33,16 @@ class InventoryProjectionTweaksController {
     this.populateProducts();
   }
 
+  preProcessTweak(tweak) {
+    tweak.date = moment(this.tweakEvent.date).format("MM/DD/YYYY");
+
+    return tweak;
+  }
+
   addNewEvent() {
-    console.log("Adding", this.tweakEvent);
-
-    this.tweakEvent.date = moment(this.tweakEvent.date).format("MM/DD/YYYY");
-
-    console.log("adding:", this.tweakEvent);
-
-    this.tweaksService.addTweak(this.tweakEvent);
+    this.tweaksService.addTweak(
+      this.preProcessTweak(this.tweakEvent)
+    );
 
     this.tweakEvent = {};
   }

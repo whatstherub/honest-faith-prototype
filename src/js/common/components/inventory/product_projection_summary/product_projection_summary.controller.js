@@ -48,8 +48,6 @@ class ProductProjectionSummaryController {
 	calculateProjections() {
 		this.projections = this.inventoryProjectionService.calculateProjections(this.product);
 
-		console.warn(this.projections);
-
 		this.productAtRisk 		= this.product.atRisk;
 		this.productDropDead 	= this.product.dropDead;
 	}

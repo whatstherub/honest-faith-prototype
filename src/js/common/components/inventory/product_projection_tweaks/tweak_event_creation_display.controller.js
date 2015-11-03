@@ -18,13 +18,16 @@ class TweakEventCreationDisplayController {
 		};
 	}
 
+	preProcessTweakEvent(tweakEvent) {
+    tweakEvent.date = moment(tweakEvent.date).format("MM/DD/YYYY");
+
+    return tweakEvent;
+  }
+
 	addNewEvent() {
-		console.log("Adding", this.tweakEvent);
-		this.tweakEvent.date = moment(this.tweakEvent.date).format("MM/DD/YYYY");
-
-    console.log("adding:", this.tweakEvent);
-
-		this.tweaksService.addTweak(this.tweakEvent);
+		this.tweaksService.addTweak(
+			this.preProcessTweakEvent(this.tweakEvent)
+		);
 
 		this.resetNewEvent();
 	}

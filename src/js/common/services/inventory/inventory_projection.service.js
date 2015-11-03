@@ -33,7 +33,11 @@ class InventoryProjectionService {
 
     return _.map(days, (dayData,key) => {
       let count = _.reduce(dayData, (result,dataPoint) => {
-        return result += dataPoint.quantity;
+        if( dataPoint.type != 'supply' ) {
+          return result += dataPoint.quantity;
+        } else {
+          return result -= dataPoint.quantity;;
+        }
       },0);
 
       let dayValue      = dayData[0].day.utc().startOf('day').valueOf(),

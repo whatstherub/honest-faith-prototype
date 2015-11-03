@@ -7,7 +7,7 @@ class SupplyAndDemandHistoryService {
       $q, $timeout,
       tweaksService: TweaksService
     });
-    
+
     this.tweaks = [];
 
     this.estimatedVariability = {
@@ -114,6 +114,8 @@ class SupplyAndDemandHistoryService {
         history.push({
           day: day,
           source: source,
+          nature: 'history',
+          type: 'demand',
           quantity: this.varyDemand(demandVariability,data.qty)
          });
       });
@@ -126,6 +128,8 @@ class SupplyAndDemandHistoryService {
     return {
       day: moment(tweak.date, "M/D/YYYY").startOf('day'),
       source: 'ex-' + tweak.customer,
+      nature: 'tweak',
+      type: tweak.type,
       quantity: parseInt(tweak.quantity)
     }
   }

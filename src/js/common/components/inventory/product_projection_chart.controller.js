@@ -16,7 +16,9 @@ class ProductProjectionChartController {
 
   watchChartDataUpdates() {
     this.$scope.$watch( () => (this.history), (newVal) => {
-      this.updateChartSeriesData(this.history);
+      if( newVal ) {
+        this.updateChartSeriesData(this.history);
+      }
     })
   }
 
@@ -28,7 +30,8 @@ class ProductProjectionChartController {
   }
 
   calculateTotalDemandByDay(history) {
-    return this.inventoryProjectionService.calculateTotalDemandByDay(this.product,history);
+    return this.inventoryProjectionService
+      .calculateTotalDemandByDay(this.product,history);
   }
 
   synthesizeInventorySeries(history) {
@@ -51,6 +54,7 @@ class ProductProjectionChartController {
   }
 
   updateChartSeriesData( history ) {
+    console.warn("update",history);
     let newSeries = _.flatten([
       this.synthesizeHistorySeries(history),
       this.synthesizeInventorySeries(history),
@@ -65,9 +69,11 @@ class ProductProjectionChartController {
   }
 
   convertHistoryToSeriesData(history) {
-    return history.map( (h) => {
-      return [ h.day.utc().valueOf(), h.quantity ];
-    });
+    return history
+      .filter( (h) => (h.type == 'demand') )
+      .map( (h) => {
+        return [ h.day.utc().valueOf(), h.quantity ];
+      });
   }
 
   produceChartConfig() {

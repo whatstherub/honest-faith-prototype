@@ -8,16 +8,21 @@ class ProductProjectionTweakListController {
 		this.watchTweakUpdates();
 	}
 
-	handleTweakUpdate(newTweaks) {
-		this.tweaks = newTweaks;
+	handleTweaksUpdate(data) {
+		if( this.isRelevantTweakUpdate(data.updateEvent) ) {
+			console.warn('inventory update', data);
+			this.tweaks = data.allEvents;
+		}
+	}
 
-		console.warn("tweaks updated", newTweaks);
+	isRelevantTweakUpdate(updateEvent) {
+		return updateEvent.product.id == this.product.id
+
 	}
 
 	watchTweakUpdates() {
 		this.$scope.$on('inventory-tweaks-updated', (updateEvent, data) => {
-			console.warn('inventory update', data);
-			this.tweaks = data.allEvents;
+			this.handleTweaksUpdate(data);
 		});
 	}
 }
