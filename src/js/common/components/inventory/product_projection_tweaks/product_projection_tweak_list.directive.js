@@ -6,7 +6,8 @@ class ProductProjectionTweakListDirective {
 			controller: 'ProductProjectionTweakListController',
 			controllerAs: 'vm',
 			bindToController: {
-				product: '='
+				product: '=',
+				tweaks: '='
 			}
 		});
 	}

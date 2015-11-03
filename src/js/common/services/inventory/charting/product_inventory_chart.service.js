@@ -108,10 +108,16 @@ class ProductInventoryChartService {
       yAxis:[{
         title: {
           text: 'demand'
+        },
+        tooltip: {
+          shared: true
         }
       },{
         title: {
           text: 'inventory'
+        },
+        tooltip: {
+          shared: true
         },
         opposite: true,
         min: -5000

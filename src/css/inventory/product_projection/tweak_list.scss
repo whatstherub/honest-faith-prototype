@@ -1,0 +1,7 @@
+.tweak-list-item {
+  .tweak-type, .tweak-date, .tweak-channel,
+  .tweak-source, .tweak-quantity, .tweak-customer {
+    float: left;
+    padding-right: 10px;
+  }
+}

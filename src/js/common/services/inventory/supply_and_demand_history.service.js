@@ -3,10 +3,11 @@
 class SupplyAndDemandHistoryService {
 
   constructor($q,$timeout,TweaksService) {
-    this.$q = $q;
-    this.$timeout = $timeout;
-    this.tweaksService = TweaksService;
-
+    Object.assign(this,{
+      $q, $timeout,
+      tweaksService: TweaksService
+    });
+    
     this.tweaks = [];
 
     this.estimatedVariability = {

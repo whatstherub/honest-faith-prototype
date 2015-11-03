@@ -5,7 +5,8 @@ class ProductProjectionDetailDirective {
       controller: 'ProductProjectionDetailController',
       controllerAs: 'vm',
       bindToController: {
-        product: '='
+        product: '=',
+        tweaks: '='
       }
     });
   }

@@ -1,2 +1,10 @@
-div.row ng-repeat="tweak in vm.productTweaks"
-  div {{ tweak.product.name }}
+div.row.tweak-list-item ng-repeat="tweak in vm.tweaks"
+  div.col-xs-12
+    div.tweak-type ng-switch="tweak.type"
+      i.fa.fa-fw.fa-plus ng-switch-when="supply"
+      i.fa.fa-fw.fa-minus ng-switch-when="demand"
+    div.tweak-date {{tweak.date}}
+    div.tweak-channel {{tweak.channel}}
+    div.tweak-customer {{tweak.customer}}
+    div.tweak-source {{tweak.source}}
+    div.tweak-quantity {{tweak.quantity}}

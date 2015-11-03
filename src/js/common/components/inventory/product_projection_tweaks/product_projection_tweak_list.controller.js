@@ -1,17 +1,24 @@
 class ProductProjectionTweakListController {
 	constructor($scope,TweaksService) {
-		this.tweaksService = TweaksService;
+		Object.assign(this,{
+			$scope,
+			tweaksService: TweaksService
+		});
+
+		this.watchTweakUpdates();
 	}
 
-	handleTweakUpdate() {
+	handleTweakUpdate(newTweaks) {
+		this.tweaks = newTweaks;
 
+		console.warn("tweaks updated", newTweaks);
 	}
 
 	watchTweakUpdates() {
-		$scope.$watch(
-			() => this.tweaksService.tweaksForProduct(this.product),
-			(newTweaks) => this.handleTweakUpdate(newTweaks)
-		);
+		this.$scope.$on('inventory-tweaks-updated', (updateEvent, data) => {
+			console.warn('inventory update', data);
+			this.tweaks = data.allEvents;
+		});
 	}
 }
 

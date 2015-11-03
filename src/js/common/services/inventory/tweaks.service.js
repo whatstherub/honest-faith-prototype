@@ -2,7 +2,23 @@ class TweaksService {
   constructor($rootScope) {
     this.$rootScope = $rootScope;
 
-    this.tweaks = [];
+    this.tweaks = [{
+      product: { id: 332 },
+      type: 'demand',
+      channel: 'ecom',
+      customer: 'shop',
+      source: 'assumption',
+      quantity: 200,
+      date: '11/02/2015'
+    },{
+      product: { id: 332 },
+      type: 'demand',
+      channel: 'ecom',
+      customer: 'shop',
+      source: 'assumption',
+      quantity: 200,
+      date: '11/08/2015'
+    }];
   }
 
   addTweak( tweakEvent ) {
@@ -22,7 +38,8 @@ class TweaksService {
   broadcastUpdate(data) {
     this.$rootScope.$broadcast('inventory-tweaks-updated', {
       updateType: data.type,
-      updateEvent: data.event
+      updateEvent: data.event,
+      allEvents: this.tweaksForProduct(data.event.product)
     });
   }
 }

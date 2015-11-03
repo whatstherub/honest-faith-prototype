@@ -6,7 +6,7 @@ class ProductProjectionModalService {
 		this.modalTemplate		= 'js/common/components/inventory/product_projection_detail/product_projection_detail_modal.template.html';
 	}
 
-	display( product, config = {} ) {
+	display( product, productTweaks, config = {} ) {
 		let { dialogClasses = ['wide'] } = config;
 
 		this.modalInstance = this.$modal(Object.assign({
@@ -14,6 +14,7 @@ class ProductProjectionModalService {
       placement: 'center',
       controller: () => {
         return {
+					tweaks: productTweaks,
           product: product,
 					dialogClasses: dialogClasses
         }

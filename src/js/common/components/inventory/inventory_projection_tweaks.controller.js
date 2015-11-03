@@ -36,6 +36,10 @@ class InventoryProjectionTweaksController {
   addNewEvent() {
     console.log("Adding", this.tweakEvent);
 
+    this.tweakEvent.date = moment(this.tweakEvent.date).format("MM/DD/YYYY");
+
+    console.log("adding:", this.tweakEvent);
+
     this.tweaksService.addTweak(this.tweakEvent);
 
     this.tweakEvent = {};
@@ -59,7 +63,6 @@ class InventoryProjectionTweaksController {
   populateProducts() {
     return this.atRiskService.getAtRiskProducts().then( (products) => {
       this.products = products;
-      this.tweaks   = {};
 
       _.each( this.products, (p) => {
 

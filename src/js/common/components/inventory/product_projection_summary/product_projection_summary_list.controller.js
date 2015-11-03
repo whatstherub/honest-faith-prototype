@@ -1,15 +1,20 @@
 class ProductProjectionSummaryListController {
-  constructor($scope,$modal,ProductProjectionModalService) {
-    this.$scope = $scope;
-    this.$modal = $modal;
-    this.productProjectionModalService = ProductProjectionModalService;
+  constructor($scope,$modal,ProductProjectionModalService,TweaksService) {
+    Object.assign(this, {
+      $scope, $modal,
+      productProjectionModalService: ProductProjectionModalService,
+      tweaksService: TweaksService
+    });
   }
 
   displayDetail(product) {
     console.warn('display detail');
-    
-    this.modalInstance = this.productProjectionModalService.display(product)
-    
+
+    let tweaks = this.tweaksService.tweaksForProduct(product);
+
+    this.modalInstance = this.productProjectionModalService
+      .display(product, tweaks);
+
     this.modalInstance.$promise.then( () => {
       this.modalInstance.show();
     });

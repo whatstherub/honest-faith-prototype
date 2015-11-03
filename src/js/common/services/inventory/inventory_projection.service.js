@@ -29,17 +29,12 @@ class InventoryProjectionService {
     let startingCount = this.inventoryDetailsService
       .getCurrentInventoryLevelForProductAt(product, today);
 
-    console.warn("starting count:", startingCount);
-
     let days = _.groupBy( history, (h) => ( h.day ) );
 
     return _.map(days, (dayData,key) => {
       let count = _.reduce(dayData, (result,dataPoint) => {
         return result += dataPoint.quantity;
       },0);
-
-      console.warn('before moment(key)', key);
-      console.warn(typeof key);
 
       let dayValue      = dayData[0].day.utc().startOf('day').valueOf(),
           runningTotal  = startingCount -= count;
