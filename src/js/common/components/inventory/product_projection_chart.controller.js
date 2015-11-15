@@ -71,9 +71,7 @@ class ProductProjectionChartController {
   convertHistoryToSeriesData(history) {
     return history
       .filter( (h) => (h.type == 'demand') )
-      .map( (h) => {
-        return [ h.day.utc().valueOf(), h.quantity ];
-      });
+      .map( (h) => ([ h.day.utc().valueOf(), h.quantity ]) );
   }
 
   produceChartConfig() {

@@ -1,4 +1,4 @@
-var gulp = require('gulp'),
+const gulp = require('gulp'),
     plumber = require('gulp-plumber'),
     cache   = require('gulp-cached'),
     babel   = require('gulp-babel'),

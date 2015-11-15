@@ -1,9 +1,14 @@
 class AtRiskNavigatorController {
-  constructor($scope,$aside,AtRiskService) {
+  constructor($scope,$aside,$q,AtRiskService,InventoryProjectionService,SupplyAndDemandHistoryService) {
     Object.assign(this,{
-      $scope, $aside,
-      atRiskService: AtRiskService
+      $scope, $aside, $q,
+      atRiskService: AtRiskService,
+      inventoryProjectionService: InventoryProjectionService,
+      supplyAndDemandHistoryService: SupplyAndDemandHistoryService
     });
+
+    this.startDate = moment().subtract(7, 'days');
+    this.endDate = moment().add(21, 'days');
 
     this.tweaksDisplayed = false;
     this.atRiskProducts = [];
@@ -27,11 +32,41 @@ class AtRiskNavigatorController {
   loadAtRiskProducts() {
     let atRiskProductsLoaded = this.atRiskService.getAtRiskProducts();
 
-    return atRiskProductsLoaded.then(products => this.processAtRiskProducts(products));
+    return atRiskProductsLoaded.then( products => {
+      this.analyzeProducts(products).then( projections => {
+        this.processAtRiskProducts(products);
+      });
+    });
+  }
+
+  calculateProjections( product ) {
+    let historyLoaded = this.supplyAndDemandHistoryService.getHistoryForProduct(
+      product,
+      this.startDate,
+      this.endDate
+    );
+
+    return historyLoaded.then( (history) => {
+      return this.inventoryProjectionService.calculateProjections(
+        product,
+        history
+      );
+    });
+  }
+
+  analyzeProducts( products ) {
+    return this.$q.all( products.map( (product) => {
+      return this.calculateProjections(product).then( (projection) => {
+        product.projection = projection;
+        console.warn("analysis complete:", product.projection);
+      });
+    }));
   }
 
   processAtRiskProducts( products ) {
     this.products = products;
+
+    return this.products;
   }
 
   expandTweaks() {
