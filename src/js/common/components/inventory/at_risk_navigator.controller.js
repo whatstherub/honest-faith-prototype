@@ -1,13 +1,13 @@
 class AtRiskNavigatorController {
   constructor($scope,$aside,AtRiskService) {
-    this.$scope = $scope;
-    this.$aside = $aside;
-    
-    this.atRiskService = AtRiskService;
+    Object.assign(this,{
+      $scope, $aside,
+      atRiskService: AtRiskService
+    });
 
     this.tweaksDisplayed = false;
     this.atRiskProducts = [];
-    
+
     this.loadAtRiskProducts();
   }
 
@@ -29,11 +29,11 @@ class AtRiskNavigatorController {
 
     return atRiskProductsLoaded.then(products => this.processAtRiskProducts(products));
   }
-  
+
   processAtRiskProducts( products ) {
     this.products = products;
   }
-  
+
   expandTweaks() {
     let tweaks = this.$aside({
       title: 'Tweaks',

@@ -3,6 +3,14 @@ class InventoryDetailsService {
 
   }
 
+  getWarningTimeThresholdForProduct( product ) {
+
+  }
+
+  getErrorTimeThresholdForProduct( product ) {
+    
+  }
+
   getCurrentInventoryLevelForProductAt( product, day ) {
     return 55000;
   }

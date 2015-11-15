@@ -2,8 +2,10 @@
 /* global moment */
 class InventoryProjectionService {
   constructor(InventoryDetailsService,SupplyAndDemandHistoryService) {
-    this.inventoryDetailsService = InventoryDetailsService;
-    this.supplyAndDemandHistoryService = SupplyAndDemandHistoryService;
+    Object.assign(this,{
+      inventoryDetailsService: InventoryDetailsService,
+      supplyAndDemandHistoryService: SupplyAndDemandHistoryService
+    });
   }
 
   calculateProjections(product,history) {

@@ -2,8 +2,11 @@
 /* global moment */
 class AtRiskService {
   constructor($q,$timeout,ProductsService,InventoryProjectionService) {
-    this.$q = $q;
-    this.$timeout = $timeout;
+    Object.assign(this,{
+      $q, $timeout,
+      productsService: ProductsService,
+      inventoryProjectionService: InventoryProjectionService
+    });
   }
 
   getAtRiskProducts() {

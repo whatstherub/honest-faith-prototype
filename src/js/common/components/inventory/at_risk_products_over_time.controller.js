@@ -1,21 +1,21 @@
 class AtRiskProductsOverTimeController {
 
   constructor($scope,$log,AtRiskService,ProductInventoryRiskOverTimeChartService) {
-    this.$log   = $log;
-    this.$scope = $scope;
+    Object.assign(this, {
+      $log, $scope,
+      atRiskService: AtRiskService,
+      productInventoryRiskOverTimeChartService: ProductInventoryRiskOverTimeChartService
+    });
 
-    this.atRiskService = AtRiskService;
-    this.productInventoryRiskOverTimeChartService = ProductInventoryRiskOverTimeChartService;
-    
     this.chartConfig = this.produceChartConfig();
-    
+
     this.watchForProductUpdates();
   }
-  
+
   watchForProductUpdates() {
     this.$scope.$watch( () => (this.products), (newProducts) => {
       if( newProducts ) {
-        this.processAtRiskProducts( newProducts ); 
+        this.processAtRiskProducts( newProducts );
       }
     });
   }
