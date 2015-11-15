@@ -8,7 +8,7 @@ class InventoryDetailsService {
   }
 
   getErrorTimeThresholdForProduct( product ) {
-    
+
   }
 
   getCurrentInventoryLevelForProductAt( product, day ) {

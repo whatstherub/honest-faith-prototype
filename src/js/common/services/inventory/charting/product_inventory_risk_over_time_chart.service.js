@@ -1,5 +1,26 @@
 class ProductInventoryRiskOverTimeChartService {
-	produceChartConfig(config = {}) {
+	produceSeriesConfig(atRiskSeries,notAtRiskSeries,actionHandler) {
+		return [{
+      cursor: 'pointer',
+      name: 'At Risk',
+      data: atRiskSeries,
+      color: '#FF0000',
+      point: {
+        events: {
+          click: function (event) {
+            actionHandler.handleAtRiskBarSelection(event,this);
+          }
+        }
+      }
+    },{
+      cursor: 'pointer',
+      name: 'Not at risk',
+      data: notAtRiskSeries,
+      color: '#CCCCCC'
+    }];
+	}
+
+	produceChartConfig(overrides = {}) {
 		return Object.assign({
       options: {
         chart: {
@@ -31,7 +52,7 @@ class ProductInventoryRiskOverTimeChartService {
       title: {
         text: "At Risk Products"
       }
-    },config);
+    },overrides);
 	}
 }
 

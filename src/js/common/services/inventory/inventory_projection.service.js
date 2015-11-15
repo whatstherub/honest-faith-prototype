@@ -17,7 +17,11 @@ class InventoryProjectionService {
     let demandAverages    = this.calculateAverageDemand(product,history),
         demandVariability = this.calculateAverageDemandVariability(product,history);
 
-    console.warn("history",history);
+    if( history ) {
+      console.warn('got history');
+    } else {
+      console.error("history",history);
+    }
 
     let dayCounts = this.calculateTotalDemandByDay(product,history),
         inventoryStates = this.detectInventoryStates(product, dayCounts, history);
@@ -32,17 +36,17 @@ class InventoryProjectionService {
   }
 
   detectInventoryStates( product, dayCounts, history ) {
-    let warningThreshold = 20000;
-    let criticalThreshold = 10000;
+    let warningThreshold = 48000;
+    let criticalThreshold = 43000;
 
     let outOfStockDay = _.find( dayCounts, (c) => c[1] <= 0 );
     let stockWarningDay = _.find( dayCounts, (c) => c[1] <= warningThreshold );
     let stockCriticalDay = _.find( dayCounts, (c) => c[1] <= criticalThreshold );
 
     return {
-      outOfStock: {}, //{ day: outOfStockDay[0], count: outOfStockDay[1] },
-      stockWarningDay: {},// { day: stockWarningDay[0], count: stockWarningDay[1] },
-      stockCriticalDay: {} // { day: stockCriticalDay[0], count: stockCriticalDay[1] }
+      outOfStock: {},// { day: outOfStockDay[0], count: outOfStockDay[1] },
+      stockWarning: { day: stockWarningDay[0], count: stockWarningDay[1] },
+      stockCritical: { day: stockCriticalDay[0], count: stockCriticalDay[1] }
     };
   }
 

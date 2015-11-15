@@ -60,26 +60,15 @@ class AtRiskProductsOverTimeController {
   }
 
   updateChartSeriesData( atRiskSeries, notAtRiskSeries ) {
-    let self = this;
+    this.chartConfig.series = this.produceChartSeries(atRiskSeries,notAtRiskSeries);
+  }
 
-    this.chartConfig.series = [{
-      cursor: 'pointer',
-      name: 'At Risk',
-      data: atRiskSeries,
-      color: '#FF0000',
-      point: {
-        events: {
-          click: function (event) {
-            self.handleAtRiskBarSelection(event,this);
-          }
-        }
-      }
-    },{
-      cursor: 'pointer',
-      name: 'Not at risk',
-      data: notAtRiskSeries,
-      color: '#CCCCCC'
-    }];
+  produceChartSeries(atRiskSeries,notAtRiskSeries) {
+    return this.productInventoryRiskOverTimeChartService.produceSeriesConfig(
+      atRiskSeries,
+      notAtRiskSeries,
+      this
+    );
   }
 
   produceChartConfig() {

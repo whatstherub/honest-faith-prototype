@@ -8,7 +8,7 @@ class AtRiskNavigatorController {
     });
 
     this.startDate = moment().subtract(7, 'days');
-    this.endDate = moment().add(21, 'days');
+    this.endDate = moment().add(31, 'days');
 
     this.tweaksDisplayed = false;
     this.atRiskProducts = [];

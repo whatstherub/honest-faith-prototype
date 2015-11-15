@@ -38,18 +38,18 @@ class ProductProjectionSummaryController {
 	}
 
 	get productAtRiskMoment() {
-		return moment(this.productAtRisk, "M/D/YYYY");
+		return moment(this.productAtRisk);
 	}
 
 	get productDropDeadMoment() {
-		return moment(this.productDropDead, "M/D/YYYY")
+		return moment(this.productDropDead);
 	}
 
 	calculateProjections() {
-		this.projections = this.inventoryProjectionService.calculateProjections(this.product);
+		this.projections = this.product.projection
 
-		this.productAtRisk 		= this.product.atRisk;
-		this.productDropDead 	= this.product.dropDead;
+		this.productAtRisk 		= this.projections.inventoryStates.stockWarning.day;
+		this.productDropDead 	= this.projections.inventoryStates.stockCritical.day;
 	}
 
 	calculateRiskStatus() {
