@@ -1,8 +1,10 @@
 class ProductProjectionChartController {
   constructor($scope, InventoryProjectionService, ProductInventoryChartService) {
-    this.$scope = $scope;
-    this.inventoryProjectionService = InventoryProjectionService;
-    this.productInventoryChartService = ProductInventoryChartService;
+    Object.assign(this, {
+      $scope,
+      inventoryProjectionService: InventoryProjectionService,
+      productInventoryChartService: ProductInventoryChartService
+    });
 
     this.chartConfig = this.produceChartConfig();
 

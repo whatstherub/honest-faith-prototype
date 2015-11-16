@@ -2,7 +2,9 @@ class TweaksService {
   constructor($rootScope) {
     this.$rootScope = $rootScope;
 
-    this.tweaks = [{
+    this.tweaks = [];
+
+    let initialTweaks = [{
       product: { id: 332 },
       type: 'demand',
       channel: 'ecom',
@@ -19,6 +21,8 @@ class TweaksService {
       quantity: 500,
       date: '11/08/2015'
     }];
+
+    _.each( initialTweaks, (t) => this.addTweak(t) );
   }
 
   addTweak( tweakEvent ) {

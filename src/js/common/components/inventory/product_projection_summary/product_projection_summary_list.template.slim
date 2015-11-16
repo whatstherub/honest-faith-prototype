@@ -1,4 +1,6 @@
 div.product-projection-summary-list
-  div v="{{product.projection.inventoryStates.stockCritical.day}}" ng-repeat="product in vm.products | orderBy:'projection.inventoryStates.stockCritical.day':false"
+  div ng-repeat="product in vm.products | orderBy:'projection.inventoryStates.stockCritical.day':false"
     div.product-projection-container
+      div.tweak-indicator ng-if="product.tweaks.length > 0"
+        i.fa.fa-fw.fa-edit
       product-projection-summary product="product" handle-selection="vm.displayDetail(product)"

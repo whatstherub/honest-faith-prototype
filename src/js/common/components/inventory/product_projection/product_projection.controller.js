@@ -1,7 +1,9 @@
 class ProductProjectionController {
   constructor($scope,SupplyAndDemandHistoryService) {
-    this.$scope = $scope;
-    this.supplyAndDemandHistoryService = SupplyAndDemandHistoryService;
+    Object.assign(this, {
+      $scope,
+      supplyAndDemandHistoryService: SupplyAndDemandHistoryService
+    });
 
     this.projectionStartDate = moment().subtract(30, 'days').startOf('day');
     this.projectionEndDate   = moment().add(14, 'days').startOf('day');

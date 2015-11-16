@@ -17,7 +17,6 @@ class ProductProjectionTweakListController {
 
 	isRelevantTweakUpdate(updateEvent) {
 		return updateEvent.product.id == this.product.id
-
 	}
 
 	watchTweakUpdates() {
