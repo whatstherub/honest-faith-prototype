@@ -7,7 +7,7 @@ class ProductProjectionListDirective {
       bindToController: {
         atRiskProducts: '='
       },
-      templateUrl: 'js/common/components/inventory/product_projection_list.template.html'
+      templateUrl: 'js/common/components/inventory/product_projection/product_projection_list.template.html'
     });
   }
 

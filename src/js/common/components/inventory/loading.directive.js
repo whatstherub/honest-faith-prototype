@@ -12,6 +12,7 @@ class LoadingDirective {
   compile() {
     return this.link.bind(this);
   }
+  
   link(scope, element, attributes) {
     this.$timeout( () => {
       let mask = element.children().eq(0);
@@ -20,7 +21,6 @@ class LoadingDirective {
         element.remove();
       });
     });
-
   }
 }
 

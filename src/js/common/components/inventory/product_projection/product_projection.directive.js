@@ -7,7 +7,7 @@ class ProductProjectionDirective {
       bindToController: {
         product: '='
       },
-      templateUrl: 'js/common/components/inventory/product_projection.template.html'
+      templateUrl: 'js/common/components/inventory/product_projection/product_projection.template.html'
     });
   }
   static builder() {

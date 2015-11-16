@@ -9,7 +9,7 @@ gulp.task('combined-js-slim', ['js','slim'], function() {
                    'src/templates.js',
                    'src/application.js',
                    'src/config.js'])
-    .pipe(concat('app.js'))
+    .pipe(concat('config.js'))
     .pipe(gulpif(argv.env == 'production' || argv.env == 'staging', uglify()))
     .pipe(gulp.dest('web/assets/js'));
 });

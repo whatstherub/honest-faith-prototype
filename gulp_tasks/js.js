@@ -20,7 +20,7 @@ gulp.task('js', function () {
       moduleIds: true
     }))
     .pipe(remember('scripts'))
-    .pipe(concat('app2.js'))
+    .pipe(concat('app.js'))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('web/assets/js'));
 });
