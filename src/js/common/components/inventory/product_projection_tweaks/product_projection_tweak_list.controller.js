@@ -1,7 +1,7 @@
 class ProductProjectionTweakListController {
-	constructor($scope,TweaksService) {
+	constructor($scope,$log,TweaksService) {
 		Object.assign(this,{
-			$scope,
+			$scope, $log,
 			tweaksService: TweaksService
 		});
 
@@ -10,7 +10,7 @@ class ProductProjectionTweakListController {
 
 	handleTweaksUpdate(data) {
 		if( this.isRelevantTweakUpdate(data.updateEvent) ) {
-			console.warn('inventory update', data);
+			this.$log.warn('inventory update', data);
 			this.tweaks = data.allEvents;
 		}
 	}

@@ -1,11 +1,11 @@
 class InventoryProjectionTweaksController {
-  constructor($scope,$rootScope,AtRiskService,TweaksService) {
-    this.$scope = $scope;
-    this.$rootScope = $rootScope;
-
-    this.atRiskService = AtRiskService;
-    this.tweaksService = TweaksService;
-
+  constructor($scope,$rootScope,$log,AtRiskService,TweaksService) {
+    Object.assign(this, {
+      $scope, $rootScope, $log,
+      atRiskService: AtRiskService,
+      tweaksService: TweaksService
+    });
+    
     this.tweakProduct = {};
     this.tweakEvent = {};
 
@@ -48,7 +48,7 @@ class InventoryProjectionTweaksController {
   }
 
   updateSelectedProduct(product) {
-    console.warn("Updating selected product:", product);
+    this.$log.warn("Updating selected product:", product);
     this.tweakEvent = {
       product: product
     };

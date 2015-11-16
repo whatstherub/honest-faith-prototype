@@ -1,6 +1,9 @@
 class ProductInventoryChartService {
-  constructor(InventoryProjectionService) {
-    this.inventoryProjectionService = InventoryProjectionService;
+  constructor($log,InventoryProjectionService) {
+    Object.assign(this, {
+      $log,
+      inventoryProjectionService: InventoryProjectionService
+    });
   }
 
   calculateTotalDemandByDay(product,history) {
@@ -12,7 +15,7 @@ class ProductInventoryChartService {
     let outOfStockDay = _.find( dayCounts, (c) => c[1] <= 0 );
 
     if( outOfStockDay ) {
-      console.warn("found OOS", outOfStockDay[0]);
+      this.$log.debug("found OOS", outOfStockDay[0]);
       return [{ x: outOfStockDay[0], title: "Out of stock"}];
     }
 
@@ -20,12 +23,10 @@ class ProductInventoryChartService {
   }
 
   detectTweakAdditions(product, dayCounts, history) {
-    console.warn(product, dayCounts, history);
-
     let tweakAdditions = history.filter( (h) => (h.nature == 'tweak') );
 
     return tweakAdditions.map( (tweak) => {
-      console.warn("tweak day:", tweak.day);
+      this.$log.debug("tweak day:", tweak.day);
       return {
         x: tweak.day.valueOf(),
         title: this.formatTweakForDisplay(tweak)

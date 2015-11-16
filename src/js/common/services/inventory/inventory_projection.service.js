@@ -12,16 +12,10 @@ class InventoryProjectionService {
     let today = moment().utc().startOf('day');
 
     let startingCount = this.inventoryDetailsService
-      .getCurrentInventoryLevelForProductAt(product, today);
+      .getCurrentInventoryLevelForProductAt(product, today, history);
 
     let demandAverages    = this.calculateAverageDemand(product,history),
         demandVariability = this.calculateAverageDemandVariability(product,history);
-
-    if( history ) {
-      console.warn('got history');
-    } else {
-      console.error("history",history);
-    }
 
     let dayCounts = this.calculateTotalDemandByDay(product,history),
         inventoryStates = this.detectInventoryStates(product, dayCounts, history);

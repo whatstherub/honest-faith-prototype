@@ -8,8 +8,6 @@ class ProductProjectionSummaryListController {
   }
 
   displayDetail(product) {
-    console.warn('display detail');
-
     let tweaks = this.tweaksService.tweaksForProduct(product);
 
     this.modalInstance = this.productProjectionModalService

@@ -30,8 +30,6 @@ class AtRiskProductsOverTimeController {
 
     let riskRange = this.produceRiskRangeByDay(atRiskProducts,range);
 
-    this.$log.debug(riskRange);
-
     var atRiskSeries = riskRange.map( (risk) => {
       return {
         x: moment.utc(risk.when).valueOf(),

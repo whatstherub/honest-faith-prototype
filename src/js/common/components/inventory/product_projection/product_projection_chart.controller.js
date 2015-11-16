@@ -1,7 +1,7 @@
 class ProductProjectionChartController {
-  constructor($scope, InventoryProjectionService, ProductInventoryChartService) {
+  constructor($scope, $log, InventoryProjectionService, ProductInventoryChartService) {
     Object.assign(this, {
-      $scope,
+      $scope, $log,
       inventoryProjectionService: InventoryProjectionService,
       productInventoryChartService: ProductInventoryChartService
     });
@@ -56,7 +56,8 @@ class ProductProjectionChartController {
   }
 
   updateChartSeriesData( history ) {
-    console.warn("update",history);
+    this.$log.warn("projection chart update",history);
+
     let newSeries = _.flatten([
       this.synthesizeHistorySeries(history),
       this.synthesizeInventorySeries(history),

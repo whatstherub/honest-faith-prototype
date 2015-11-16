@@ -1,7 +1,7 @@
 class ProductProjectionController {
-  constructor($scope,SupplyAndDemandHistoryService) {
+  constructor($scope,$log,SupplyAndDemandHistoryService) {
     Object.assign(this, {
-      $scope,
+      $scope, $log,
       supplyAndDemandHistoryService: SupplyAndDemandHistoryService
     });
 
@@ -27,14 +27,14 @@ class ProductProjectionController {
     )
   }
 
-  handleHistoricalDataUpdate() {
+  handleHistoricalDataUpdate(updateEvent) {
     this.populateHistory();
   }
 
   listenForHistoricalDataUpdate() {
     this.$scope.$on('inventory-tweaks-updated', (e) => {
-      console.warn("got inventory update");
-      this.handleHistoricalDataUpdate();
+      this.$log.warn("got inventory update");
+      this.handleHistoricalDataUpdate(e);
     });
   }
 }

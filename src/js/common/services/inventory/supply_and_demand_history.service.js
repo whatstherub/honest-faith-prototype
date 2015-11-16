@@ -2,9 +2,9 @@
 /* global _ */
 class SupplyAndDemandHistoryService {
 
-  constructor($q,$timeout,TweaksService) {
+  constructor($q,$timeout,$log,TweaksService) {
     Object.assign(this,{
-      $q, $timeout,
+      $q, $timeout, $log,
       tweaksService: TweaksService
     });
 
@@ -136,7 +136,7 @@ class SupplyAndDemandHistoryService {
 
   augmentHistoryWithAssumptions(product,history) {
     for( let tweak of this.tweaksService.tweaksForProduct(product) ) {
-      console.warn("augmenting tweak",tweak);
+      this.$log.debug("augmenting tweak",tweak);
       history.push( this.transformTweakToSequence(tweak) );
     }
 

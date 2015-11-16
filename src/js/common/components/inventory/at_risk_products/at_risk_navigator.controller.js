@@ -1,7 +1,7 @@
 class AtRiskNavigatorController {
-  constructor($scope,$aside,$q,AtRiskService,InventoryProjectionService,SupplyAndDemandHistoryService) {
+  constructor($scope,$aside,$q,$log,AtRiskService,InventoryProjectionService,SupplyAndDemandHistoryService) {
     Object.assign(this,{
-      $scope, $aside, $q,
+      $scope, $aside, $q, $log,
       atRiskService: AtRiskService,
       inventoryProjectionService: InventoryProjectionService,
       supplyAndDemandHistoryService: SupplyAndDemandHistoryService
@@ -58,7 +58,7 @@ class AtRiskNavigatorController {
     return this.$q.all( products.map( (product) => {
       return this.calculateProjections(product).then( (projection) => {
         product.projection = projection;
-        console.warn("analysis complete:", product.projection);
+        this.$log.debug("analysis complete:", product.projection);
       });
     }));
   }
