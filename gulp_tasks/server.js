@@ -1,7 +1,7 @@
 import gulp from 'gulp';
 import koaService from 'gulp-koa-service';
 
-gulp.task( 'run', () => {
+gulp.task( 'run', ['serve'], () => {
   return gulp.src('index.js')
     .pipe(koaService({
       "env": {

@@ -3,16 +3,20 @@
   "version": "1.0.0",
   "description": "honest faith prototype",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url":  "https://github.com/honest/faith_dashboard"
+  },
   "engines": {
     "node": "0.12.7"
   },
   "scripts": {
     "build": "node --harmony ./node_modules/.bin/gulp",
-    "serve": "node --harmony ./node_modules/.bin/gulp serve",
+    "serve": "node --harmony ./node_modules/.bin/gulp run",
     "start": "node --harmony index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "The Honest Company",
   "license": "ISC",
   "devDependencies": {
     "bower": "^1.6.0",

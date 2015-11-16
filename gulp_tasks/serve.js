@@ -3,7 +3,7 @@ import browserSync from 'browser-sync';
 import watch from 'gulp-watch';
 
 
-gulp.task('serve', [ 'combined-js-slim' ], function() {
+gulp.task('serve', [ 'build' ], function() {
   watch('src/**/*.slim', function() {
     gulp.start('combined-js-slim');
   });
