@@ -1,7 +1,7 @@
 {
-  "name": "honest-faith-prototype",
+  "name": "honest-faith-dashboard",
   "version": "1.0.0",
-  "description": "honest faith prototype",
+  "description": "FAITH dashboard",
   "main": "index.js",
   "repository": {
     "type": "git",
