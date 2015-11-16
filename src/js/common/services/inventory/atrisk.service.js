@@ -1,15 +1,29 @@
 /* global _ */
 /* global moment */
 class AtRiskService {
-  constructor($q,$timeout,ProductsService,InventoryProjectionService) {
+  constructor($q,$timeout,$resource,ProductsService,InventoryProjectionService) {
     Object.assign(this,{
-      $q, $timeout,
+      $q, $timeout, $resource,
       productsService: ProductsService,
       inventoryProjectionService: InventoryProjectionService
     });
+
+    this.createResource();
+  }
+
+  createResource() {
+    this.productsResource = this.$resource('/api/products');
   }
 
   getAtRiskProducts() {
+    return this.getAtRiskProductsFromServer();
+  }
+
+  getAtRiskProductsFromServer() {
+    return this.productsResource.query().$promise;
+  }
+
+  getStubbedAtRiskProducts() {
     let products = [
       { id: 1  , sku: 'DIAPERS'     , name: 'Diapers', threshold: 10000 },
       { id: 332, sku: 'LOTION-AP'   , name: 'Lotion - Apricot', threshold: 5000 },
@@ -28,7 +42,6 @@ class AtRiskService {
       })
     });
   }
-
   produceRiskRangeByDay( atRiskProducts, range ) {
     var riskRange = [];
 

@@ -11,7 +11,7 @@ import ProductInventoryRiskOverTimeChartService from 'common.services.inventory.
 
 var moduleName = 'common.services.inventory';
 
-angular.module(moduleName, [])
+angular.module(moduleName, ['ngResource'])
   .service('ProductsService', ProductsService)
   .service('InventoryProjectionService', InventoryProjectionService)
   .service('AtRiskService', AtRiskService)
