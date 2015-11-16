@@ -72,6 +72,7 @@
     "koa": "^1.1.1",
     "koa-basic-auth": "^1.1.2",
     "koa-gzip": "^0.1.0",
+    "koa-router": "^5.2.3",
     "koa-static": "^1.5.1"
   }
 }
