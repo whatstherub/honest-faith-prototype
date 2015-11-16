@@ -67,6 +67,8 @@
     "yargs": "^3.25.0"
   },
   "dependencies": {
+    "babel-core": "^5.8.22",
+    "babel-runtime": "^5.8.34",
     "gulp-autoprefixer": "^3.1.0",
     "gulp-koa-service": "0.0.8",
     "koa": "^1.1.1",
