@@ -1,8 +1,11 @@
 /* global moment */
 class ProductProjectionSummaryController {
 	constructor($scope,InventoryProjectionService) {
-		this.inventoryProjectionService = InventoryProjectionService;
-
+		Object.assign(this, {
+			$scope,
+			inventoryProjectionService: InventoryProjectionService
+		});
+		
 		this.riskClass = [];
 
 		this.riskThresholdDate = moment().add(14, 'days');

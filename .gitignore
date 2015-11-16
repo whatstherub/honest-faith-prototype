@@ -2,3 +2,4 @@ assets
 web/assets
 node_modules
 vendor
+npm-debug.log
