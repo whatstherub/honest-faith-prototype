@@ -29,19 +29,53 @@ class InventoryProjectionService {
     };
   }
 
+  timeOrFarFuture(timeWithData) {
+    if( timeWithData && timeWithData.length > 0 ) {
+      console.warn('time found', timeWithData);
+      return timeWithData[0];
+    } else {
+      console.warn('no time found');
+      return moment().add('days',365).valueOf();
+    }
+  }
+
+  augmentWithTimesIfAvailable(result,timeWithData) {
+    result.day = result.detected
+      ? timeWithData[0]
+      : this.timeOrFarFuture(timeWithData);
+
+    if( timeWithData && timeWithData.length > 1 ) {
+      result.count = timeWithData[1];
+    }
+
+    return result;
+  }
+
   detectInventoryStates( product, dayCounts, history ) {
-    let warningThreshold = 48000;
-    let criticalThreshold = 43000;
+    let warningThreshold  = 38000,
+        criticalThreshold = 30000;
 
-    let outOfStockDay = _.find( dayCounts, (c) => c[1] <= 0 );
-    let stockWarningDay = _.find( dayCounts, (c) => c[1] <= warningThreshold );
-    let stockCriticalDay = _.find( dayCounts, (c) => c[1] <= criticalThreshold );
+    let outOfStockDay     = _.find( dayCounts, (c) => c[1] <= 0 ),
+        stockWarningDay   = _.find( dayCounts, (c) => c[1] <= warningThreshold ),
+        stockCriticalDay  = _.find( dayCounts, (c) => c[1] <= criticalThreshold );
 
-    return {
-      outOfStock: {},// { day: outOfStockDay[0], count: outOfStockDay[1] },
-      stockWarning: { day: stockWarningDay[0], count: stockWarningDay[1] },
-      stockCritical: { day: stockCriticalDay[0], count: stockCriticalDay[1] }
+    let detectedOutOfStock = outOfStockDay !== undefined,
+        detectedWarning    = stockWarningDay !== undefined,
+        detectedCritical   = stockCriticalDay !== undefined;
+
+    let ret = {
+      outOfStock: { detected: detectedOutOfStock },
+      stockWarning: { detected: detectedWarning },
+      stockCritical: { detected: detectedCritical }
     };
+
+    console.error(ret);
+
+    this.augmentWithTimesIfAvailable(ret.outOfStock, outOfStockDay);
+    this.augmentWithTimesIfAvailable(ret.stockWarning, stockWarningDay);
+    this.augmentWithTimesIfAvailable(ret.stockCritical, stockCriticalDay);
+
+    return ret;
   }
 
   calculateTotalDemandByDay(product,history) {

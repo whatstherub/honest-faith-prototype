@@ -2,5 +2,7 @@ div.product-projection-summary-list
   div ng-repeat="product in vm.products | orderBy:'projection.inventoryStates.stockCritical.day':false"
     div.product-projection-container
       div.tweak-indicator ng-if="product.tweaks.length > 0"
-        i.fa.fa-fw.fa-edit
+        span 
+          i.fa.fa-gear.fa-fw
+          span {{product.tweaks.length}}
       product-projection-summary product="product" handle-selection="vm.displayDetail(product)"

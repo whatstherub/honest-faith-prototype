@@ -31,7 +31,7 @@
     <div class="at-risk-navigator" >
       <div class="row">
         <div class="col-xs-12">
-          <at-risk-products-over-time
+          <at-risk-products-over-time ng-if="navVm.products"
             products="navVm.products"
             handle-products-selection="navVm.updateSelectedProducts(selectedProducts)"
           ></at-risk-products-over-time>
@@ -41,7 +41,7 @@
       <div class="row">
         <div class="col-xs-12">
 
-          <product-projection-summary-list
+          <product-projection-summary-list ng-if="navVm.products"
             products="navVm.products"
             handle-product-selection="vm.displayDetail(product)"
           ></product-projection-summary-list>

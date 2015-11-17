@@ -14,7 +14,7 @@ class ProductProjectionController {
   }
 
   populateHistory() {
-    this.requestHistory().then( (history) => {
+    return this.requestHistory().then( (history) => {
       this.historicalData = history;
     });
   }

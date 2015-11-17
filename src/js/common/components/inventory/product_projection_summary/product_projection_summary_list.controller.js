@@ -5,6 +5,15 @@ class ProductProjectionSummaryListController {
       productProjectionModalService: ProductProjectionModalService,
       tweaksService: TweaksService
     });
+
+    this.associateExistingTweaks();
+  }
+
+  associateExistingTweaks() {
+    console.warn(this.products);
+    for( let product of this.products ) {
+      product.tweaks = this.tweaksService.tweaksForProduct(product);
+    }
   }
 
   displayDetail(product) {

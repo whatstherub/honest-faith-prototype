@@ -1,6 +1,8 @@
 class TweaksService {
   constructor($rootScope) {
-    this.$rootScope = $rootScope;
+    Object.assign(this, {
+      $rootScope
+    });
 
     this.tweaks = [];
 

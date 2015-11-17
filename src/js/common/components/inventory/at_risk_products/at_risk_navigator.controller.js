@@ -33,7 +33,7 @@ class AtRiskNavigatorController {
     let atRiskProductsLoaded = this.atRiskService.getAtRiskProducts();
 
     return atRiskProductsLoaded.then( products => {
-      this.analyzeProducts(products).then( projections => {
+      return this.analyzeProducts(products).then( projections => {
         this.processAtRiskProducts(products);
       });
     });
